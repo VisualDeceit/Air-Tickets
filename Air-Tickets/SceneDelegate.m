@@ -27,10 +27,11 @@
     mainViewController.title = @"Air Tickets Search";
     
     //NavigationController init
-    UINavigationController *navigationController = [[UINavigationController alloc]initWithRootViewController:mainViewController];
+    self.navigationController = [[UINavigationController alloc]initWithRootViewController:mainViewController];
+    
     
     //set RootViewController
-    [self.window setRootViewController:navigationController];
+    [self.window setRootViewController:self.navigationController];
     
     //set setWindowScene
     UIWindowScene *windowScene = (UIWindowScene *)scene;

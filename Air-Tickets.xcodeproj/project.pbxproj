@@ -13,6 +13,7 @@
 		157EE82C267CCD71000750A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 157EE82A267CCD71000750A0 /* LaunchScreen.storyboard */; };
 		157EE82F267CCD71000750A0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 157EE82E267CCD71000750A0 /* main.m */; };
 		157EE83A267CD017000750A0 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 157EE839267CD017000750A0 /* MainViewController.m */; };
+		157EE843267CD7B7000750A0 /* SearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 157EE842267CD7B7000750A0 /* SearchResultViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,8 @@
 		157EE82E267CCD71000750A0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		157EE838267CD017000750A0 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		157EE839267CD017000750A0 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		157EE841267CD7B7000750A0 /* SearchResultViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchResultViewController.h; sourceTree = "<group>"; };
+		157EE842267CD7B7000750A0 /* SearchResultViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchResultViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +66,8 @@
 				157EE81D267CCD6D000750A0 /* AppDelegate.m */,
 				157EE81F267CCD6D000750A0 /* SceneDelegate.h */,
 				157EE820267CCD6D000750A0 /* SceneDelegate.m */,
+				157EE841267CD7B7000750A0 /* SearchResultViewController.h */,
+				157EE842267CD7B7000750A0 /* SearchResultViewController.m */,
 				157EE838267CD017000750A0 /* MainViewController.h */,
 				157EE839267CD017000750A0 /* MainViewController.m */,
 				157EE828267CCD71000750A0 /* Assets.xcassets */,
@@ -143,6 +148,7 @@
 			files = (
 				157EE81E267CCD6D000750A0 /* AppDelegate.m in Sources */,
 				157EE82F267CCD71000750A0 /* main.m in Sources */,
+				157EE843267CD7B7000750A0 /* SearchResultViewController.m in Sources */,
 				157EE821267CCD6D000750A0 /* SceneDelegate.m in Sources */,
 				157EE83A267CD017000750A0 /* MainViewController.m in Sources */,
 			);
