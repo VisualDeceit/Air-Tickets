@@ -10,7 +10,8 @@
 #import "SearchResultViewController.h"
 
 #define X_PADDING 8.0
-#define ELEMENT_WIDTH [UIScreen mainScreen].bounds.size.width - X_PADDING*2
+#define Y_PADDING 8.0
+#define ELEMENT_WIDTH [UIScreen mainScreen].bounds.size.width - X_PADDING * 2.0
 
 @interface MainViewController ()
 
@@ -36,14 +37,14 @@
     [self.view addSubview: departureLabel];
     
     
-    CGRect departureFrame = CGRectMake(X_PADDING, departureLabel.frame.origin.y + departureLabel.frame.size.height + X_PADDING, ELEMENT_WIDTH, 44.0);
+    CGRect departureFrame = CGRectMake(X_PADDING, departureLabel.frame.origin.y + departureLabel.frame.size.height + Y_PADDING, ELEMENT_WIDTH, 44.0);
     UITextField *departureTextField = [[UITextField alloc] initWithFrame:departureFrame];
     departureTextField.borderStyle = UITextBorderStyleRoundedRect;
     departureTextField.placeholder = @"Enter aitport name...";
     departureTextField.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightLight];
     [self.view addSubview: departureTextField];
     
-    CGRect destinationLabelFrame = CGRectMake(X_PADDING, departureTextField.frame.origin.y + departureTextField.frame.size.height + X_PADDING, ELEMENT_WIDTH, 25.0);
+    CGRect destinationLabelFrame = CGRectMake(X_PADDING, departureTextField.frame.origin.y + departureTextField.frame.size.height + Y_PADDING, ELEMENT_WIDTH, 25.0);
     UILabel *destinationLabel = [[UILabel alloc] initWithFrame: destinationLabelFrame];
     destinationLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightBold];
     destinationLabel.textColor = [UIColor labelColor];
@@ -52,14 +53,14 @@
     [self.view addSubview: destinationLabel];
     
     
-    CGRect destinationFrame = CGRectMake(X_PADDING, destinationLabel.frame.origin.y + destinationLabel.frame.size.height + X_PADDING, ELEMENT_WIDTH, 44.0);
+    CGRect destinationFrame = CGRectMake(X_PADDING, destinationLabel.frame.origin.y + destinationLabel.frame.size.height + Y_PADDING, ELEMENT_WIDTH, 44.0);
     UITextField *destinationTextField = [[UITextField alloc] initWithFrame:destinationFrame];
     destinationTextField.borderStyle = UITextBorderStyleRoundedRect;
     destinationTextField.placeholder = @"Enter aitport name...";
     destinationTextField.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightLight];
     [self.view addSubview: destinationTextField];
     
-    CGRect searchButtonFrame = CGRectMake(X_PADDING, destinationTextField.frame.origin.y + destinationTextField.frame.size.height + X_PADDING, ELEMENT_WIDTH, 44.0);
+    CGRect searchButtonFrame = CGRectMake(X_PADDING, destinationTextField.frame.origin.y + destinationTextField.frame.size.height + Y_PADDING * 2.0, ELEMENT_WIDTH, 44.0);
     UIButton *searchButton = [UIButton buttonWithType: UIButtonTypeSystem];
     [searchButton setTitle:@"Search tickets" forState:UIControlStateNormal];
     searchButton.backgroundColor = [UIColor blueColor];
@@ -77,8 +78,10 @@
     SearchResultViewController *searchResultViewController = [SearchResultViewController new];
     searchResultViewController.title = @"Found tickets";
     
-    SceneDelegate *sceneDelegate = (SceneDelegate *)self.parentViewController.view.window.windowScene.delegate;
-    [sceneDelegate.navigationController pushViewController:searchResultViewController animated:YES];
+//    SceneDelegate *sceneDelegate = (SceneDelegate *)self.parentViewController.view.window.windowScene.delegate;
+//    [sceneDelegate.navigationController pushViewController:searchResultViewController animated:YES];
+    
+    [self.navigationController pushViewController:searchResultViewController animated:YES];
 }
 
 @end
