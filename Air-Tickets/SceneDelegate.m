@@ -6,6 +6,7 @@
 //
 
 #import "SceneDelegate.h"
+#import "MainViewController.h"
 
 @interface SceneDelegate ()
 
@@ -15,9 +16,26 @@
 
 
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions {
-    // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-    // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-    // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+    
+    //creating window
+    CGRect windowFrame = [[UIScreen mainScreen] bounds];
+    self.window = [[UIWindow alloc]initWithFrame:windowFrame];
+    [self.window makeKeyAndVisible];
+    
+    //MainViewController init
+    MainViewController *mainViewController = [MainViewController new];
+    mainViewController.title = @"Air Tickets Search";
+    
+    //NavigationController init
+    self.navigationController = [[UINavigationController alloc]initWithRootViewController:mainViewController];
+    
+    
+    //set RootViewController
+    [self.window setRootViewController:self.navigationController];
+    
+    //set setWindowScene
+    UIWindowScene *windowScene = (UIWindowScene *)scene;
+    [self.window setWindowScene:windowScene];
 }
 
 
