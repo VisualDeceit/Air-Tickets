@@ -7,6 +7,8 @@
 
 #import "PlaceViewController.h"
 
+#define ReuseIdentifier @"ReuseIdentifier"
+
 @interface PlaceViewController ()
 
 @property (nonatomic) PlaceType placeType;
@@ -47,10 +49,11 @@
     _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Cities", @"Airports"]];
     [_segmentedControl addTarget:self action:@selector(changeSource) forControlEvents:UIControlEventValueChanged];
     _segmentedControl.tintColor = [UIColor blackColor];
+
     self.navigationItem.titleView = _segmentedControl;
     _segmentedControl.selectedSegmentIndex = 0;
-   // [self changeSource];
-    
+    [self changeSource];
+
     if (_placeType == PlaceTypeDeparture) {
         self.title = @"Departure";
     } else {
@@ -69,6 +72,7 @@
         default:
             break;
     }
+    [_tableView reloadData];
 }
 
 // MARK:- DataSource
@@ -78,7 +82,24 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [[UITableViewCell alloc]init];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ReuseIdentifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc]initWithStyle: UITableViewCellStyleSubtitle reuseIdentifier:ReuseIdentifier];
+    }
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        City *city = [_currentArray objectAtIndex:indexPath.row];
+        cell.textLabel.text = city.name;
+        cell.detailTextLabel.text = city.code;
+    }
+    else if (_segmentedControl.selectedSegmentIndex == 1) {
+        Airport *airport = [_currentArray objectAtIndex:indexPath.row];
+        cell.textLabel.text = airport.name;
+        cell.detailTextLabel.text = airport.code;
+    }
+    
+    return cell;
 }
 
 // MARK:- Delegate

@@ -25,6 +25,8 @@
 @property (nonatomic, strong) UITextField *destinationTextField;
 @property (nonatomic, strong) UIButton *destinationButton;
 
+@property (nonatomic) SearchRequest searchRequest;
+
 @end
 
 @implementation MainViewController
@@ -138,6 +140,26 @@
 // MARK:- PlaceViewControllecDelegate
 
 - (void)selectPlace:(nonnull id)place withType:(PlaceType)placeType andDataType:(DataSourceType)dataType {
+    
+    NSString *title;
+    NSString *iata;
+    if (dataType == DataSourceTypeCity) {
+        City *city = (City *)place;
+        title = city.name;
+        iata = city.code;
+    }
+    else if (dataType == DataSourceTypeAirport) {
+        Airport *airport = (Airport *)place;
+        title = airport.name;
+        iata = airport.cityCode;
+    }
+    if (placeType == PlaceTypeDeparture) {
+        _searchRequest.origin = iata;
+        [_departureTextField setText:title];
+    } else {
+        _searchRequest.destionation = iata;
+        [_destinationTextField setText:title];
+    }
 }
 
 @end
