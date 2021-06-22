@@ -1,0 +1,93 @@
+//
+//  PlaceViewController.m
+//  Air-Tickets
+//
+//  Created by Alexander Fomin on 22.06.2021.
+//
+
+#import "PlaceViewController.h"
+
+@interface PlaceViewController ()
+
+@property (nonatomic) PlaceType placeType;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UISegmentedControl *segmentedControl;
+@property (nonatomic, strong) NSArray *currentArray;
+
+@end
+
+@implementation PlaceViewController
+
+- (instancetype)initWithType: (PlaceType)type {
+    self = [super init];
+    if (self) {
+        _placeType = type;
+    }
+    return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self setupView];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.prefersLargeTitles = YES;
+}
+
+- (void)setupView {
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    
+    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    [self.view addSubview:_tableView];
+    
+    _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Cities", @"Airports"]];
+    [_segmentedControl addTarget:self action:@selector(changeSource) forControlEvents:UIControlEventValueChanged];
+    _segmentedControl.tintColor = [UIColor blackColor];
+    self.navigationItem.titleView = _segmentedControl;
+    _segmentedControl.selectedSegmentIndex = 0;
+   // [self changeSource];
+    
+    if (_placeType == PlaceTypeDeparture) {
+        self.title = @"Departure";
+    } else {
+        self.title = @"Destination";
+    }
+}
+
+- (void)changeSource {
+    switch (_segmentedControl.selectedSegmentIndex) {
+        case 0:
+            _currentArray = [[DataManager sharedInstance] cities];
+            break;
+        case 1:
+            _currentArray = [[DataManager sharedInstance] airports];
+            break;
+        default:
+            break;
+    }
+}
+
+// MARK:- DataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return _currentArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [[UITableViewCell alloc]init];
+}
+
+// MARK:- Delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    DataSourceType dataType = (int)_segmentedControl.selectedSegmentIndex + 1;
+   
+    [self.delegate selectPlace:[_currentArray objectAtIndex:indexPath.row] withType:_placeType andDataType:dataType];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+@end

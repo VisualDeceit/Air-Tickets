@@ -8,6 +8,7 @@
 #import "MainViewController.h"
 #import "SceneDelegate.h"
 #import "SearchResultViewController.h"
+#import "PlaceViewController.h"
 
 #define X_PADDING 8.0
 #define Y_PADDING 8.0
@@ -31,18 +32,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self configureView];
+    [self setupView];
+    [DataManager.sharedInstance loadData];
 }
 
-- (void) configureView {
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.prefersLargeTitles = NO;    
+}
+
+- (void) setupView {
     [self.view setBackgroundColor:[UIColor systemBackgroundColor]];
+
     
     CGRect departureLabelFrame = CGRectMake(X_PADDING, 80.0, SCREEN_WIDTH - X_PADDING, 25.0);
     self.departureLabel = [[UILabel alloc] initWithFrame: departureLabelFrame];
     self.departureLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightBold];
     self.departureLabel.textColor = [UIColor labelColor];
     self.departureLabel.textAlignment = NSTextAlignmentLeft;
-    self.departureLabel.text = @"Departure airport";
+    self.departureLabel.text = @"Departure";
     [self.view addSubview: self.departureLabel];
     
     CGFloat offset = self.departureLabel.frame.origin.y + self.departureLabel.frame.size.height + Y_PADDING;
@@ -61,7 +69,7 @@
     self.departureButton.tintColor = [UIColor whiteColor];
     self.departureButton.frame = departureButtonFrame;
     self.departureButton.layer.cornerRadius = 5.0;
-    [self.departureButton addTarget:self action:@selector(searchButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
+    [self.departureButton addTarget:self action:@selector(placeButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.departureButton];
     
     offset = self.departureTextField.frame.origin.y + self.departureTextField.frame.size.height + Y_PADDING * 2.0;
@@ -71,7 +79,7 @@
     self.destinationLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightBold];
     self.destinationLabel.textColor = [UIColor labelColor];
     self.destinationLabel.textAlignment = NSTextAlignmentLeft;
-    self.destinationLabel.text = @"Destination airport";
+    self.destinationLabel.text = @"Destination";
     [self.view addSubview: self.destinationLabel];
     
     offset = self.destinationLabel.frame.origin.y + self.destinationLabel.frame.size.height + Y_PADDING;
@@ -90,7 +98,7 @@
     self.destinationButton.tintColor = [UIColor whiteColor];
     self.destinationButton.frame = destinationButtonFrame;
     self.destinationButton.layer.cornerRadius = 5.0;
-    [self.destinationButton addTarget:self action:@selector(searchButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
+    [self.destinationButton addTarget:self action:@selector(placeButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.destinationButton];
     
     offset =  self.destinationTextField.frame.origin.y + self.destinationTextField.frame.size.height + Y_PADDING * 3.0;
@@ -104,7 +112,6 @@
     searchButton.layer.cornerRadius = 5.0;
     [searchButton addTarget:self action:@selector(searchButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:searchButton];
-    
 }
 
 // Search tickets
@@ -114,6 +121,23 @@
     searchResultViewController.title = @"Found tickets";
 
     [self.navigationController pushViewController:searchResultViewController animated:YES];
+}
+
+-(void)placeButtonDidTap:(UIButton *)sender {
+    PlaceViewController *placeViewController;
+    if ([sender isEqual:_departureButton]) {
+        placeViewController = [[PlaceViewController alloc]initWithType:PlaceTypeDeparture];
+    } else {
+        placeViewController = [[PlaceViewController alloc]initWithType:PlaceTypeDestination];
+    }
+    
+    placeViewController.delegate = self;
+    [self.navigationController pushViewController:placeViewController animated:YES];
+}
+
+// MARK:- PlaceViewControllecDelegate
+
+- (void)selectPlace:(nonnull id)place withType:(PlaceType)placeType andDataType:(DataSourceType)dataType {
 }
 
 @end
