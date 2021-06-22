@@ -10,6 +10,8 @@
 
 @interface SceneDelegate ()
 
+@property (strong, nonatomic) UINavigationController *navigationController;
+
 @end
 
 @implementation SceneDelegate
