@@ -14,6 +14,14 @@
 		157EE82F267CCD71000750A0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 157EE82E267CCD71000750A0 /* main.m */; };
 		157EE83A267CD017000750A0 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 157EE839267CD017000750A0 /* MainViewController.m */; };
 		157EE843267CD7B7000750A0 /* SearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 157EE842267CD7B7000750A0 /* SearchResultViewController.m */; };
+		157EE84E2681C801000750A0 /* PlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 157EE84D2681C801000750A0 /* PlaceViewController.m */; };
+		157EE8522681CA4B000750A0 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 157EE8512681CA4B000750A0 /* DataManager.m */; };
+		157EE85D2681DB36000750A0 /* Country.m in Sources */ = {isa = PBXBuildFile; fileRef = 157EE85C2681DB36000750A0 /* Country.m */; };
+		157EE8612681DB43000750A0 /* City.m in Sources */ = {isa = PBXBuildFile; fileRef = 157EE8602681DB43000750A0 /* City.m */; };
+		157EE8652681DB52000750A0 /* Airport.m in Sources */ = {isa = PBXBuildFile; fileRef = 157EE8642681DB52000750A0 /* Airport.m */; };
+		157EE86A2681DED2000750A0 /* airports.json in Resources */ = {isa = PBXBuildFile; fileRef = 157EE8672681DED2000750A0 /* airports.json */; };
+		157EE86B2681DED2000750A0 /* cities.json in Resources */ = {isa = PBXBuildFile; fileRef = 157EE8682681DED2000750A0 /* cities.json */; };
+		157EE86C2681DED2000750A0 /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = 157EE8692681DED2000750A0 /* countries.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +38,20 @@
 		157EE839267CD017000750A0 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		157EE841267CD7B7000750A0 /* SearchResultViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchResultViewController.h; sourceTree = "<group>"; };
 		157EE842267CD7B7000750A0 /* SearchResultViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchResultViewController.m; sourceTree = "<group>"; };
+		157EE84C2681C801000750A0 /* PlaceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlaceViewController.h; sourceTree = "<group>"; };
+		157EE84D2681C801000750A0 /* PlaceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlaceViewController.m; sourceTree = "<group>"; };
+		157EE8502681CA4B000750A0 /* DataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
+		157EE8512681CA4B000750A0 /* DataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
+		157EE8582681D73F000750A0 /* PlaceViewControllecDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlaceViewControllecDelegate.h; sourceTree = "<group>"; };
+		157EE85B2681DB36000750A0 /* Country.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Country.h; sourceTree = "<group>"; };
+		157EE85C2681DB36000750A0 /* Country.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Country.m; sourceTree = "<group>"; };
+		157EE85F2681DB43000750A0 /* City.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = City.h; sourceTree = "<group>"; };
+		157EE8602681DB43000750A0 /* City.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = City.m; sourceTree = "<group>"; };
+		157EE8632681DB52000750A0 /* Airport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Airport.h; sourceTree = "<group>"; };
+		157EE8642681DB52000750A0 /* Airport.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Airport.m; sourceTree = "<group>"; };
+		157EE8672681DED2000750A0 /* airports.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = airports.json; sourceTree = "<group>"; };
+		157EE8682681DED2000750A0 /* cities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cities.json; sourceTree = "<group>"; };
+		157EE8692681DED2000750A0 /* countries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +84,9 @@
 		157EE81B267CCD6D000750A0 /* Air-Tickets */ = {
 			isa = PBXGroup;
 			children = (
+				157EE8562681D2CB000750A0 /* Model */,
+				157EE8542681CA57000750A0 /* Services */,
+				157EE86E2681DEFC000750A0 /* Data */,
 				157EE81C267CCD6D000750A0 /* AppDelegate.h */,
 				157EE81D267CCD6D000750A0 /* AppDelegate.m */,
 				157EE81F267CCD6D000750A0 /* SceneDelegate.h */,
@@ -70,12 +95,47 @@
 				157EE842267CD7B7000750A0 /* SearchResultViewController.m */,
 				157EE838267CD017000750A0 /* MainViewController.h */,
 				157EE839267CD017000750A0 /* MainViewController.m */,
+				157EE8582681D73F000750A0 /* PlaceViewControllecDelegate.h */,
+				157EE84C2681C801000750A0 /* PlaceViewController.h */,
+				157EE84D2681C801000750A0 /* PlaceViewController.m */,
 				157EE828267CCD71000750A0 /* Assets.xcassets */,
 				157EE82A267CCD71000750A0 /* LaunchScreen.storyboard */,
 				157EE82D267CCD71000750A0 /* Info.plist */,
 				157EE82E267CCD71000750A0 /* main.m */,
 			);
 			path = "Air-Tickets";
+			sourceTree = "<group>";
+		};
+		157EE8542681CA57000750A0 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				157EE8502681CA4B000750A0 /* DataManager.h */,
+				157EE8512681CA4B000750A0 /* DataManager.m */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		157EE8562681D2CB000750A0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				157EE85B2681DB36000750A0 /* Country.h */,
+				157EE85C2681DB36000750A0 /* Country.m */,
+				157EE85F2681DB43000750A0 /* City.h */,
+				157EE8602681DB43000750A0 /* City.m */,
+				157EE8632681DB52000750A0 /* Airport.h */,
+				157EE8642681DB52000750A0 /* Airport.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		157EE86E2681DEFC000750A0 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				157EE8672681DED2000750A0 /* airports.json */,
+				157EE8692681DED2000750A0 /* countries.json */,
+				157EE8682681DED2000750A0 /* cities.json */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,8 +194,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				157EE86B2681DED2000750A0 /* cities.json in Resources */,
 				157EE82C267CCD71000750A0 /* LaunchScreen.storyboard in Resources */,
 				157EE829267CCD71000750A0 /* Assets.xcassets in Resources */,
+				157EE86C2681DED2000750A0 /* countries.json in Resources */,
+				157EE86A2681DED2000750A0 /* airports.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,11 +209,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				157EE85D2681DB36000750A0 /* Country.m in Sources */,
+				157EE8652681DB52000750A0 /* Airport.m in Sources */,
+				157EE84E2681C801000750A0 /* PlaceViewController.m in Sources */,
 				157EE81E267CCD6D000750A0 /* AppDelegate.m in Sources */,
+				157EE8522681CA4B000750A0 /* DataManager.m in Sources */,
 				157EE82F267CCD71000750A0 /* main.m in Sources */,
 				157EE843267CD7B7000750A0 /* SearchResultViewController.m in Sources */,
 				157EE821267CCD6D000750A0 /* SceneDelegate.m in Sources */,
 				157EE83A267CD017000750A0 /* MainViewController.m in Sources */,
+				157EE8612681DB43000750A0 /* City.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
