@@ -61,7 +61,6 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [[NSNotificationCenter defaultCenter] postNotificationName:kDataManagerLoadDataDidComplete object:nil];
        });
-        NSLog(@"Complete load data");
    });
 }
 

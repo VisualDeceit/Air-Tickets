@@ -21,7 +21,7 @@
 
 - (void)cityForCurrentIP:(void (^)(City * _Nonnull))completion {
     [self IPAddressWithCompletion:^(NSString *ipAddress) {
-        NSString *url = [[NSString alloc] stringByAppendingFormat:@"%@%@",API_URL_CITY_FROM_IP, ipAddress];
+        NSString *url = [NSString stringWithFormat:@"%@%@",API_URL_CITY_FROM_IP, ipAddress];
         [self loadFromURL:url withCompletion:^(id  _Nullable result) {
             NSDictionary *json = result;
             NSString *iata = [json valueForKey:@"iata"];
@@ -48,11 +48,7 @@
 //загрузка данных из сети
 -(void)loadFromURL:(NSString *)urlString withCompletion:(void (^)(id _Nullable result))completion {
     [[[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
             completion([NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil]);
-        });
-        
     }] resume];
 }
 

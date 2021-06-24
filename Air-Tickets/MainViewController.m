@@ -9,6 +9,7 @@
 #import "SceneDelegate.h"
 #import "SearchResultViewController.h"
 #import "PlaceViewController.h"
+#import "APIManager.h"
 
 #define X_PADDING 8.0
 #define Y_PADDING 8.0
@@ -114,6 +115,9 @@
     searchButton.layer.cornerRadius = 5.0;
     [searchButton addTarget:self action:@selector(searchButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:searchButton];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataLoadedSuccessfully) name:kDataManagerLoadDataDidComplete object:nil];
+
 }
 
 // Search tickets
@@ -137,52 +141,43 @@
     
     //через блок
     placeViewController.onSelectPlace = ^(id  _Nonnull place, PlaceType placeType, DataSourceType dataType) {
-        NSString *title;
-        NSString *iata;
-        if (dataType == DataSourceTypeCity) {
-            City *city = (City *)place;
-            title = city.name;
-            iata = city.code;
-        }
-        else if (dataType == DataSourceTypeAirport) {
-            Airport *airport = (Airport *)place;
-            title = airport.name;
-            iata = airport.cityCode;
-        }
-        if (placeType == PlaceTypeDeparture) {
-            self->_searchRequest.origin = iata;
-            [self->_departureTextField setText:title];
-        } else {
-            self->_searchRequest.destionation = iata;
-            [self->_destinationTextField setText:title];
-        }
+        [self setPlace:place withType:placeType andDataType:dataType];
     };
     
     [self.navigationController pushViewController:placeViewController animated:YES];
 }
 
-// MARK:- PlaceViewControllecDelegate
+- (void)dataLoadedSuccessfully {
+    [[APIManager shared] cityForCurrentIP:^(City * _Nonnull city) {
+        [self setPlace:city withType:PlaceTypeDeparture andDataType:DataSourceTypeCity];
+    }];
+}
 
+- (void)setPlace:(nonnull id)place withType:(PlaceType)placeType andDataType:(DataSourceType)dataType {
+    NSString *title;
+    NSString *iata;
+    if (dataType == DataSourceTypeCity) {
+        City *city = (City *)place;
+        title = city.name;
+        iata = city.code;
+    }
+    else if (dataType == DataSourceTypeAirport) {
+        Airport *airport = (Airport *)place;
+        title = airport.name;
+        iata = airport.cityCode;
+    }
+    if (placeType == PlaceTypeDeparture) {
+        self->_searchRequest.origin = iata;
+        [self->_departureTextField setText:title];
+    } else {
+        self->_searchRequest.destionation = iata;
+        [self->_destinationTextField setText:title];
+    }
+}
+
+// MARK:- PlaceViewControllecDelegate
 - (void)selectPlace:(nonnull id)place withType:(PlaceType)placeType andDataType:(DataSourceType)dataType {
-//    NSString *title;
-//    NSString *iata;
-//    if (dataType == DataSourceTypeCity) {
-//        City *city = (City *)place;
-//        title = city.name;
-//        iata = city.code;
-//    }
-//    else if (dataType == DataSourceTypeAirport) {
-//        Airport *airport = (Airport *)place;
-//        title = airport.name;
-//        iata = airport.cityCode;
-//    }
-//    if (placeType == PlaceTypeDeparture) {
-//        _searchRequest.origin = iata;
-//        [_departureTextField setText:title];
-//    } else {
-//        _searchRequest.destionation = iata;
-//        [_destinationTextField setText:title];
-//    }
+   // [self setPlace:place withType:placeType andDataType:dataType];
 }
 
 @end
