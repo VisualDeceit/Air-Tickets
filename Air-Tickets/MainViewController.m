@@ -134,32 +134,55 @@
     }
     
     placeViewController.delegate = self;
+    
+    //через блок
+    placeViewController.onSelectPlace = ^(id  _Nonnull place, PlaceType placeType, DataSourceType dataType) {
+        NSString *title;
+        NSString *iata;
+        if (dataType == DataSourceTypeCity) {
+            City *city = (City *)place;
+            title = city.name;
+            iata = city.code;
+        }
+        else if (dataType == DataSourceTypeAirport) {
+            Airport *airport = (Airport *)place;
+            title = airport.name;
+            iata = airport.cityCode;
+        }
+        if (placeType == PlaceTypeDeparture) {
+            self->_searchRequest.origin = iata;
+            [self->_departureTextField setText:title];
+        } else {
+            self->_searchRequest.destionation = iata;
+            [self->_destinationTextField setText:title];
+        }
+    };
+    
     [self.navigationController pushViewController:placeViewController animated:YES];
 }
 
 // MARK:- PlaceViewControllecDelegate
 
 - (void)selectPlace:(nonnull id)place withType:(PlaceType)placeType andDataType:(DataSourceType)dataType {
-    
-    NSString *title;
-    NSString *iata;
-    if (dataType == DataSourceTypeCity) {
-        City *city = (City *)place;
-        title = city.name;
-        iata = city.code;
-    }
-    else if (dataType == DataSourceTypeAirport) {
-        Airport *airport = (Airport *)place;
-        title = airport.name;
-        iata = airport.cityCode;
-    }
-    if (placeType == PlaceTypeDeparture) {
-        _searchRequest.origin = iata;
-        [_departureTextField setText:title];
-    } else {
-        _searchRequest.destionation = iata;
-        [_destinationTextField setText:title];
-    }
+//    NSString *title;
+//    NSString *iata;
+//    if (dataType == DataSourceTypeCity) {
+//        City *city = (City *)place;
+//        title = city.name;
+//        iata = city.code;
+//    }
+//    else if (dataType == DataSourceTypeAirport) {
+//        Airport *airport = (Airport *)place;
+//        title = airport.name;
+//        iata = airport.cityCode;
+//    }
+//    if (placeType == PlaceTypeDeparture) {
+//        _searchRequest.origin = iata;
+//        [_departureTextField setText:title];
+//    } else {
+//        _searchRequest.destionation = iata;
+//        [_destinationTextField setText:title];
+//    }
 }
 
 @end

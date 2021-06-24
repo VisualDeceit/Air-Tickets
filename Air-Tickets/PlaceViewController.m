@@ -106,9 +106,18 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     DataSourceType dataType = (int)_segmentedControl.selectedSegmentIndex + 1;
    
+    //через делегат
     [self.delegate selectPlace:[_currentArray objectAtIndex:indexPath.row] withType:_placeType andDataType:dataType];
     
+    //с помощью блока
+    self.onSelectPlace([_currentArray objectAtIndex:indexPath.row], _placeType, dataType);
+    
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+//block test
+- (void)function: (void (^)(NSString *))callback {
+    callback(@"kutut");
 }
 
 @end
