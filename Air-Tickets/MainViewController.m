@@ -47,7 +47,6 @@
 - (void) setupView {
     [self.view setBackgroundColor:[UIColor systemBackgroundColor]];
 
-    
     CGRect departureLabelFrame = CGRectMake(X_PADDING, 80.0, SCREEN_WIDTH - X_PADDING, 25.0);
     self.departureLabel = [[UILabel alloc] initWithFrame: departureLabelFrame];
     self.departureLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightBold];
@@ -117,16 +116,22 @@
     [self.view addSubview:searchButton];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataLoadedSuccessfully) name:kDataManagerLoadDataDidComplete object:nil];
-
 }
 
 // Search tickets
 - (void)searchButtonDidTap:(UIButton *)sender {
-    
-    SearchResultViewController *searchResultViewController = [SearchResultViewController new];
-    searchResultViewController.title = @"Found tickets";
-
-    [self.navigationController pushViewController:searchResultViewController animated:YES];
+    [[APIManager shared] ticketsWithRequest:_searchRequest withCompletion:^(NSArray * _Nonnull tickets) {
+        if (tickets.count > 0) {
+            SearchResultViewController *searchResultViewController = [[SearchResultViewController alloc] initWithTickets:tickets];
+            searchResultViewController.title = @"Tickets";
+            [self.navigationController pushViewController:searchResultViewController animated:YES];
+        } else {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Увы!" message:@"По данному направлению билетов не найдено" preferredStyle: UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:@"Закрыть" style:(UIAlertActionStyleDefault) handler:nil]];
+            [self presentViewController:alertController animated:YES completion:nil];
+            
+        }
+    }];
 }
 
 -(void)placeButtonDidTap:(UIButton *)sender {
@@ -136,14 +141,11 @@
     } else {
         placeViewController = [[PlaceViewController alloc]initWithType:PlaceTypeDestination];
     }
-    
     placeViewController.delegate = self;
-    
     //через блок
     placeViewController.onSelectPlace = ^(id  _Nonnull place, PlaceType placeType, DataSourceType dataType) {
         [self setPlace:place withType:placeType andDataType:dataType];
     };
-    
     [self.navigationController pushViewController:placeViewController animated:YES];
 }
 

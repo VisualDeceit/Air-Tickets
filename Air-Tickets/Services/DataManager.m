@@ -81,6 +81,16 @@
     return nil;
 }
 
+- (City *)searchCityBy:(NSString *)name {
+    if (name) {
+        for (City *city in _citiesArray) {
+            if ([city.name containsString:name]) {
+                return city;
+            }
+        }
+    }
+    return nil;
+}
 
 - (NSArray *) countries {
     return _countriesArray;
