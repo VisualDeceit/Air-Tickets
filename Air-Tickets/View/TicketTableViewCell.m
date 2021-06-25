@@ -6,6 +6,7 @@
 //
 
 #import "TicketTableViewCell.h"
+#import "APIManager.h"
 
 @interface TicketTableViewCell()
 
@@ -69,8 +70,16 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"dd MMMM yyyy hh:mm";
     _dateLabel.text = [dateFormatter stringFromDate:ticket.departure];
-   // NSURL *urlLogo = AirlineLogo(ticket.airline);
-    //[_airlineLogoView yy_setImageWithURL:urlLogo options:YYWebImageOptionSetImageWithFadeAnimation];
+    NSURL *urlLogo = AirlineLogo(ticket.airline);
+    
+    NSURLSessionDownloadTask *downloadLogoTask = [[NSURLSession sharedSession] downloadTaskWithURL:urlLogo completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        UIImage  *downloadedImage = [UIImage imageWithData:
+            [NSData dataWithContentsOfURL:location]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self->_airlineLogoView.image = downloadedImage;
+        });
+    }];
+    [downloadLogoTask resume];
 }
 
 

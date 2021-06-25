@@ -54,11 +54,13 @@
 }
 
 - (void)ticketsWithRequest:(SearchRequest)request withCompletion:(void (^)(NSArray *tickets))completion {
-   // NSString *urlString = [NSString stringWithFormat:@"%@?%@&token=%@", API_URL_CHEAP, [self searchRequestQuery:request], API_TOKEN];
-    ///debug
+    // FIXME: - Для отладки
     request.destionation = @"MOW";
     request.origin = @"LON";
     NSString *urlString = @"https://api.travelpayouts.com/v1/prices/cheap?origin=LON&destination=MOW&token=6ff61158c98bbf368f3592e9d998ea04";
+    //--------------------------------------------------------------------------------------------
+    // NSString *urlString = [NSString stringWithFormat:@"%@?%@&token=%@", API_URL_CHEAP, [self searchRequestQuery:request], API_TOKEN];
+    //--------------------------------------------------------------------------------------------
     [self loadFromURL:urlString withCompletion:^(id  _Nullable result) {
         NSDictionary *response = result;
         if (response) {
