@@ -82,6 +82,12 @@
     [downloadLogoTask resume];
 }
 
-
-
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    
+    _priceLabel.text = @"";
+    _placesLabel.text = @"";
+    _dateLabel.text = @"";
+    _airlineLogoView.image = nil;
+}
 @end
