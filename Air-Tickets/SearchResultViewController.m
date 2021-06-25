@@ -48,10 +48,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setupView];
+    [self configureUI];
 }
 
-- (void)setupView {
+- (void)configureUI {
     [self.view setBackgroundColor:[UIColor systemBackgroundColor]];
     
     _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];

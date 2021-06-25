@@ -35,7 +35,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setupView];
+    [self configureUI];
     [DataManager.sharedInstance loadData];
 }
 
@@ -44,7 +44,7 @@
     self.navigationController.navigationBar.prefersLargeTitles = NO;    
 }
 
-- (void) setupView {
+- (void) configureUI {
     [self.view setBackgroundColor:[UIColor systemBackgroundColor]];
 
     CGRect departureLabelFrame = CGRectMake(X_PADDING, 80.0, SCREEN_WIDTH - X_PADDING, 25.0);
