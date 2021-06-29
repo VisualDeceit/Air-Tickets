@@ -136,16 +136,22 @@
 
 // Search tickets
 - (void)searchButtonDidTap:(UIButton *)sender {
+    if ((!_searchRequest.origin) || (!_searchRequest.destionation)) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error!" message:@"Enter all initial data for the request" preferredStyle: UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Close" style:(UIAlertActionStyleDefault) handler:nil]];
+        [self presentViewController:alertController animated:YES completion:nil];
+        return;
+    }
+    
     [[APIManager sharedInstance] ticketsWithRequest:_searchRequest withCompletion:^(NSArray * _Nonnull tickets) {
         if (tickets.count > 0) {
             SearchResultViewController *searchResultViewController = [[SearchResultViewController alloc] initWithTickets:tickets];
             searchResultViewController.title = @"Tickets";
             [self.navigationController pushViewController:searchResultViewController animated:YES];
         } else {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Увы!" message:@"По данному направлению билетов не найдено" preferredStyle: UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:@"Закрыть" style:(UIAlertActionStyleDefault) handler:nil]];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Sorry!" message:@"No tickets found for this direction" preferredStyle: UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:@"Close" style:(UIAlertActionStyleDefault) handler:nil]];
             [self presentViewController:alertController animated:YES completion:nil];
-            
         }
     }];
 }
