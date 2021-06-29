@@ -25,8 +25,12 @@
 @property (nonatomic, strong) UILabel *destinationLabel;
 @property (nonatomic, strong) UITextField *destinationTextField;
 @property (nonatomic, strong) UIButton *destinationButton;
+@property (nonatomic, strong) UIButton *searchButton;
+@property (nonatomic, strong) UIButton *mapPriceButton;
 
 @property (nonatomic) SearchRequest searchRequest;
+@property (nonatomic, strong) LocationService *locationService;
+@property (nonatomic, strong) CLLocation *currentLocation;
 
 @end
 
@@ -106,21 +110,33 @@
     offset =  self.destinationTextField.frame.origin.y + self.destinationTextField.frame.size.height + Y_PADDING * 3.0;
     
     CGRect searchButtonFrame = CGRectMake(X_PADDING, offset, SCREEN_WIDTH - X_PADDING * 2.0, 44.0);
-    UIButton *searchButton = [UIButton buttonWithType: UIButtonTypeSystem];
-    [searchButton setTitle:@"Search tickets" forState:UIControlStateNormal];
-    searchButton.backgroundColor = [UIColor systemGray2Color];
-    searchButton.tintColor = [UIColor whiteColor];
-    searchButton.frame = searchButtonFrame;
-    searchButton.layer.cornerRadius = 5.0;
-    [searchButton addTarget:self action:@selector(searchButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:searchButton];
+    _searchButton = [UIButton buttonWithType: UIButtonTypeSystem];
+    [_searchButton setTitle:@"Search tickets" forState:UIControlStateNormal];
+    _searchButton.backgroundColor = [UIColor systemGray2Color];
+    _searchButton.tintColor = [UIColor whiteColor];
+    _searchButton.frame = searchButtonFrame;
+    _searchButton.layer.cornerRadius = 5.0;
+    [_searchButton addTarget:self action:@selector(searchButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_searchButton];
+    
+    offset =  _searchButton.frame.origin.y + _searchButton.frame.size.height + Y_PADDING;
+    
+    CGRect mapPriceButtonFrame = CGRectMake(X_PADDING, offset, SCREEN_WIDTH - X_PADDING * 2.0, 44.0);
+    _mapPriceButton = [UIButton buttonWithType: UIButtonTypeSystem];
+    [_mapPriceButton setTitle:@"Show price map" forState:UIControlStateNormal];
+    _mapPriceButton.backgroundColor = [UIColor systemGray2Color];
+    _mapPriceButton.tintColor = [UIColor whiteColor];
+    _mapPriceButton.frame = mapPriceButtonFrame;
+    _mapPriceButton.layer.cornerRadius = 5.0;
+    [_mapPriceButton addTarget:self action:@selector(mapPriceDidTap) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_mapPriceButton];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataLoadedSuccessfully) name:kDataManagerLoadDataDidComplete object:nil];
 }
 
 // Search tickets
 - (void)searchButtonDidTap:(UIButton *)sender {
-    [[APIManager shared] ticketsWithRequest:_searchRequest withCompletion:^(NSArray * _Nonnull tickets) {
+    [[APIManager sharedInstance] ticketsWithRequest:_searchRequest withCompletion:^(NSArray * _Nonnull tickets) {
         if (tickets.count > 0) {
             SearchResultViewController *searchResultViewController = [[SearchResultViewController alloc] initWithTickets:tickets];
             searchResultViewController.title = @"Tickets";
@@ -134,7 +150,7 @@
     }];
 }
 
--(void)placeButtonDidTap:(UIButton *)sender {
+- (void)placeButtonDidTap:(UIButton *)sender {
     PlaceViewController *placeViewController;
     if ([sender isEqual:_departureButton]) {
         placeViewController = [[PlaceViewController alloc]initWithType:PlaceTypeDeparture];
@@ -149,10 +165,29 @@
     [self.navigationController pushViewController:placeViewController animated:YES];
 }
 
+- (void)mapPriceDidTap {
+    MapPriceViewController *mapPriceViewController = [[MapPriceViewController alloc] initWithLocation:_currentLocation];
+    [self.navigationController pushViewController:mapPriceViewController animated:YES];
+}
+
 - (void)dataLoadedSuccessfully {
-    [[APIManager shared] cityForCurrentIP:^(City * _Nonnull city) {
-        [self setPlace:city withType:PlaceTypeDeparture andDataType:DataSourceTypeCity];
-    }];
+    //определение текущего города по IP
+//    [[APIManager shared] cityForCurrentIP:^(City * _Nonnull city) {
+//        [self setPlace:city withType:PlaceTypeDeparture andDataType:DataSourceTypeCity];
+//    }];
+    //определение текущего города через LocationService
+    _locationService = [[LocationService alloc] init];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCurrentLocation:) name:kLocationServiceDidUpdateCurrentLocation object:nil];
+}
+
+- (void)updateCurrentLocation:(NSNotification *)notification {
+    _currentLocation = notification.object;
+    if (_currentLocation) {
+        City *city = [[DataManager sharedInstance] cityForLocation:_currentLocation];
+        if (city) {
+            [self setPlace:city withType:PlaceTypeDeparture andDataType:DataSourceTypeCity];
+        }
+    }
 }
 
 - (void)setPlace:(nonnull id)place withType:(PlaceType)placeType andDataType:(DataSourceType)dataType {
