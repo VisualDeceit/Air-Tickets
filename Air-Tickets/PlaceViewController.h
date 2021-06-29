@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PlaceViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface PlaceViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 
 @property (nonatomic, weak, nullable) id<PlaceViewControllecDelegate> delegate;
 

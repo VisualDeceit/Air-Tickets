@@ -61,7 +61,6 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [[NSNotificationCenter defaultCenter] postNotificationName:kDataManagerLoadDataDidComplete object:nil];
        });
-        NSLog(@"Complete load data");
    });
 }
 
@@ -69,6 +68,28 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:type];
     NSData *data =[NSData dataWithContentsOfFile: path];
     return [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+}
+
+- (City *)cityForIATA:(NSString *)iata {
+    if (iata) {
+        for (City *city in _citiesArray) {
+            if ([city.code isEqualToString:iata]) {
+                return city;
+            }
+        }
+    }
+    return nil;
+}
+
+- (City *)searchCityBy:(NSString *)name {
+    if (name) {
+        for (City *city in _citiesArray) {
+            if ([city.name containsString:name]) {
+                return city;
+            }
+        }
+    }
+    return nil;
 }
 
 - (NSArray *) countries {

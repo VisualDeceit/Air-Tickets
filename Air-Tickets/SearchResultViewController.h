@@ -9,7 +9,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SearchResultViewController : UIViewController
+@interface SearchResultViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+
+- (instancetype)initWithTickets:(NSArray *)tickets;
 
 @end
 

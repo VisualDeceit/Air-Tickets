@@ -9,6 +9,7 @@
 #import "SceneDelegate.h"
 #import "SearchResultViewController.h"
 #import "PlaceViewController.h"
+#import "APIManager.h"
 
 #define X_PADDING 8.0
 #define Y_PADDING 8.0
@@ -34,7 +35,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setupView];
+    [self configureUI];
     [DataManager.sharedInstance loadData];
 }
 
@@ -43,10 +44,9 @@
     self.navigationController.navigationBar.prefersLargeTitles = NO;    
 }
 
-- (void) setupView {
+- (void) configureUI {
     [self.view setBackgroundColor:[UIColor systemBackgroundColor]];
 
-    
     CGRect departureLabelFrame = CGRectMake(X_PADDING, 80.0, SCREEN_WIDTH - X_PADDING, 25.0);
     self.departureLabel = [[UILabel alloc] initWithFrame: departureLabelFrame];
     self.departureLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightBold];
@@ -114,15 +114,24 @@
     searchButton.layer.cornerRadius = 5.0;
     [searchButton addTarget:self action:@selector(searchButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:searchButton];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataLoadedSuccessfully) name:kDataManagerLoadDataDidComplete object:nil];
 }
 
 // Search tickets
 - (void)searchButtonDidTap:(UIButton *)sender {
-    
-    SearchResultViewController *searchResultViewController = [SearchResultViewController new];
-    searchResultViewController.title = @"Found tickets";
-
-    [self.navigationController pushViewController:searchResultViewController animated:YES];
+    [[APIManager shared] ticketsWithRequest:_searchRequest withCompletion:^(NSArray * _Nonnull tickets) {
+        if (tickets.count > 0) {
+            SearchResultViewController *searchResultViewController = [[SearchResultViewController alloc] initWithTickets:tickets];
+            searchResultViewController.title = @"Tickets";
+            [self.navigationController pushViewController:searchResultViewController animated:YES];
+        } else {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Увы!" message:@"По данному направлению билетов не найдено" preferredStyle: UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:@"Закрыть" style:(UIAlertActionStyleDefault) handler:nil]];
+            [self presentViewController:alertController animated:YES completion:nil];
+            
+        }
+    }];
 }
 
 -(void)placeButtonDidTap:(UIButton *)sender {
@@ -132,57 +141,45 @@
     } else {
         placeViewController = [[PlaceViewController alloc]initWithType:PlaceTypeDestination];
     }
-    
     placeViewController.delegate = self;
-    
     //через блок
     placeViewController.onSelectPlace = ^(id  _Nonnull place, PlaceType placeType, DataSourceType dataType) {
-        NSString *title;
-        NSString *iata;
-        if (dataType == DataSourceTypeCity) {
-            City *city = (City *)place;
-            title = city.name;
-            iata = city.code;
-        }
-        else if (dataType == DataSourceTypeAirport) {
-            Airport *airport = (Airport *)place;
-            title = airport.name;
-            iata = airport.cityCode;
-        }
-        if (placeType == PlaceTypeDeparture) {
-            self->_searchRequest.origin = iata;
-            [self->_departureTextField setText:title];
-        } else {
-            self->_searchRequest.destionation = iata;
-            [self->_destinationTextField setText:title];
-        }
+        [self setPlace:place withType:placeType andDataType:dataType];
     };
-    
     [self.navigationController pushViewController:placeViewController animated:YES];
 }
 
-// MARK:- PlaceViewControllecDelegate
+- (void)dataLoadedSuccessfully {
+    [[APIManager shared] cityForCurrentIP:^(City * _Nonnull city) {
+        [self setPlace:city withType:PlaceTypeDeparture andDataType:DataSourceTypeCity];
+    }];
+}
 
+- (void)setPlace:(nonnull id)place withType:(PlaceType)placeType andDataType:(DataSourceType)dataType {
+    NSString *title;
+    NSString *iata;
+    if (dataType == DataSourceTypeCity) {
+        City *city = (City *)place;
+        title = city.name;
+        iata = city.code;
+    }
+    else if (dataType == DataSourceTypeAirport) {
+        Airport *airport = (Airport *)place;
+        title = airport.name;
+        iata = airport.cityCode;
+    }
+    if (placeType == PlaceTypeDeparture) {
+        self->_searchRequest.origin = iata;
+        [self->_departureTextField setText:title];
+    } else {
+        self->_searchRequest.destionation = iata;
+        [self->_destinationTextField setText:title];
+    }
+}
+
+// MARK:- PlaceViewControllecDelegate
 - (void)selectPlace:(nonnull id)place withType:(PlaceType)placeType andDataType:(DataSourceType)dataType {
-//    NSString *title;
-//    NSString *iata;
-//    if (dataType == DataSourceTypeCity) {
-//        City *city = (City *)place;
-//        title = city.name;
-//        iata = city.code;
-//    }
-//    else if (dataType == DataSourceTypeAirport) {
-//        Airport *airport = (Airport *)place;
-//        title = airport.name;
-//        iata = airport.cityCode;
-//    }
-//    if (placeType == PlaceTypeDeparture) {
-//        _searchRequest.origin = iata;
-//        [_departureTextField setText:title];
-//    } else {
-//        _searchRequest.destionation = iata;
-//        [_destinationTextField setText:title];
-//    }
+   // [self setPlace:place withType:placeType andDataType:dataType];
 }
 
 @end
