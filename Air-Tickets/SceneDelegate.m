@@ -26,7 +26,7 @@
     
     //MainViewController init
     MainViewController *mainViewController = [MainViewController new];
-    mainViewController.title = @"Air Tickets Search";
+    mainViewController.title = @"Search tickets";
     
     //NavigationController init
     self.navigationController = [[UINavigationController alloc]initWithRootViewController:mainViewController];
