@@ -19,6 +19,9 @@
 @property (nonatomic, strong) NSMutableArray *filteredArray;
 @property (nonatomic, strong) UISearchController *searchController;
 
+@property (nonatomic, assign, getter=isSearchBarEmpty) BOOL searchBarEmpty;
+@property (nonatomic, assign, getter=isFiltering) BOOL filtering;
+
 @end
 
 @implementation PlaceViewController
@@ -30,6 +33,14 @@
         _filteredArray = [[NSMutableArray alloc] init];
     }
     return self;
+}
+
+- (BOOL)isSearchBarEmpty {
+    return [_searchController.searchBar.text isEqual:@""];
+}
+
+- (BOOL)isFiltering {
+    return _searchController.active && !self.searchBarEmpty;
 }
 
 - (void)viewDidLoad {
@@ -94,7 +105,7 @@
     [_tableView reloadData];
 }
 
-- (void) setSearchBarPlaceholderText {
+- (void)setSearchBarPlaceholderText {
     NSString *placeholderTemplate;
     if (_placeType == PlaceTypeDeparture) {
         placeholderTemplate = @"departure";
@@ -110,9 +121,19 @@
     }
 }
 
+- (void)filterContentForSearchText:(NSString *)searchText {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name CONTAINS[cd] %@", searchText];
+    [_filteredArray removeAllObjects];
+    [_filteredArray addObjectsFromArray: [_currentArray filteredArrayUsingPredicate: predicate]];
+    [_tableView reloadData];
+}
+
 // MARK:- TableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _filteredArray.count;
+    if (self.filtering) {
+        return _filteredArray.count;
+    }
+    return _currentArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -123,12 +144,12 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     if (_segmentedControl.selectedSegmentIndex == 0) {
-        City *city = [_filteredArray objectAtIndex:indexPath.row];
+        City *city = self.isFiltering ? [_filteredArray objectAtIndex:indexPath.row] : [_currentArray objectAtIndex:indexPath.row];
         cell.textLabel.text = city.name;
         cell.detailTextLabel.text = city.code;
     }
     else if (_segmentedControl.selectedSegmentIndex == 1) {
-        Airport *airport = [_filteredArray objectAtIndex:indexPath.row];
+        Airport *airport = self.isFiltering ? [_filteredArray objectAtIndex:indexPath.row] : [_currentArray objectAtIndex:indexPath.row];
         cell.textLabel.text = airport.name;
         cell.detailTextLabel.text = airport.code;
     }
@@ -141,10 +162,14 @@
     DataSourceType dataType = (int)_segmentedControl.selectedSegmentIndex + 1;
    
     //через делегат
-    [self.delegate selectPlace:[_currentArray objectAtIndex:indexPath.row] withType:_placeType andDataType:dataType];
+    //[self.delegate selectPlace:[_currentArray objectAtIndex:indexPath.row] withType:_placeType andDataType:dataType];
     
     //с помощью блока
-    self.onSelectPlace([_filteredArray objectAtIndex:indexPath.row], _placeType, dataType);
+    if (self.isFiltering) {
+        self.onSelectPlace([_filteredArray objectAtIndex:indexPath.row], _placeType, dataType);
+    } else {
+        self.onSelectPlace([_currentArray objectAtIndex:indexPath.row], _placeType, dataType);
+    }
     
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -174,7 +199,7 @@
 
 //MARK: - UISearchResultsUpdating
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    
+    [self filterContentForSearchText:searchController.searchBar.text];
 }
 
 @end
