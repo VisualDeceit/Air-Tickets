@@ -10,21 +10,13 @@
 @interface MapPriceViewController ()
 
 @property (strong, nonatomic) MKMapView *mapView;
-@property (nonatomic, strong) CLLocation *currentLocation;
 @property (nonatomic, strong) City *origin;
 @property (nonatomic, strong) NSArray *prices;
+@property (nonatomic, strong) LocationService *locationService;
 
 @end
 
 @implementation MapPriceViewController
-
-- (instancetype)initWithLocation:(CLLocation *)location {
-    self = [super init];
-    if (self) {
-        _currentLocation = location;
-    }
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -35,6 +27,7 @@
 
 - (void)configureUI {
     self.title = @"Price map";
+    self.navigationController.navigationBar.prefersLargeTitles = YES;
 }
 
 - (void)configureMap {
@@ -42,10 +35,18 @@
     _mapView.showsUserLocation = YES;
     [self.view addSubview:_mapView];
     
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(_currentLocation.coordinate, 1000000, 1000000);
+    _locationService = [[LocationService alloc] init];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCurrentLocation:) name:kLocationServiceDidUpdateCurrentLocation object:nil];
+}
+
+- (void)updateCurrentLocation:(NSNotification *)notification {
+    CLLocation *currentLocation = notification.object;
+    
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(currentLocation.coordinate, 1000000, 1000000);
     [_mapView setRegion: region animated: YES];
-    if (_currentLocation) {
-        _origin = [[DataManager sharedInstance] cityForLocation:_currentLocation];
+    
+    if (currentLocation) {
+        _origin = [[DataManager sharedInstance] cityForLocation:currentLocation];
         if (_origin) {
             [[APIManager sharedInstance] mapPricesFor:_origin withCompletion:^(NSArray *prices) {
                 self.prices = prices;

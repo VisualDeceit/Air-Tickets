@@ -51,6 +51,7 @@
 - (void)configureUI {
     self.view.backgroundColor = [UIColor systemBackgroundColor];
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+   // self.navigationItem.hidesSearchBarWhenScrolling = NO;
     
 //    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 116, self.view.bounds.size.width, 44.0)];
 //    _searchBar.searchBarStyle = UISearchBarStyleMinimal;

@@ -27,10 +27,8 @@
 @property (nonatomic, strong) UIButton *destinationButton;
 @property (nonatomic, strong) UIButton *searchButton;
 @property (nonatomic, strong) UIButton *mapPriceButton;
-
 @property (nonatomic) SearchRequest searchRequest;
 @property (nonatomic, strong) LocationService *locationService;
-@property (nonatomic, strong) CLLocation *currentLocation;
 
 @end
 
@@ -45,8 +43,8 @@
 
 - (void) configureUI {
     [self.view setBackgroundColor:[UIColor systemBackgroundColor]];
-    
     self.navigationController.navigationBar.prefersLargeTitles = YES;
+    self.title = @"Search tickets";
 
     CGRect departureLabelFrame = CGRectMake(X_PADDING, 114.0, SCREEN_WIDTH - X_PADDING, 25.0);
     self.departureLabel = [[UILabel alloc] initWithFrame: departureLabelFrame];
@@ -126,7 +124,7 @@
     _mapPriceButton.frame = mapPriceButtonFrame;
     _mapPriceButton.layer.cornerRadius = 5.0;
     [_mapPriceButton addTarget:self action:@selector(mapPriceDidTap) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_mapPriceButton];
+   // [self.view addSubview:_mapPriceButton];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataLoadedSuccessfully) name:kDataManagerLoadDataDidComplete object:nil];
 }
@@ -169,8 +167,8 @@
 }
 
 - (void)mapPriceDidTap {
-    MapPriceViewController *mapPriceViewController = [[MapPriceViewController alloc] initWithLocation:_currentLocation];
-    [self.navigationController pushViewController:mapPriceViewController animated:YES];
+  //  MapPriceViewController *mapPriceViewController = [[MapPriceViewController alloc] initWithLocation:_currentLocation];
+ //   [self.navigationController pushViewController:mapPriceViewController animated:YES];
 }
 
 - (void)dataLoadedSuccessfully {
@@ -184,9 +182,9 @@
 }
 
 - (void)updateCurrentLocation:(NSNotification *)notification {
-    _currentLocation = notification.object;
-    if (_currentLocation) {
-        City *city = [[DataManager sharedInstance] cityForLocation:_currentLocation];
+    CLLocation *currentLocation = notification.object;
+    if (currentLocation) {
+        City *city = [[DataManager sharedInstance] cityForLocation:currentLocation];
         if (city) {
             [self setPlace:city withType:PlaceTypeDeparture andDataType:DataSourceTypeCity];
         }

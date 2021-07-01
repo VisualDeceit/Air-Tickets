@@ -14,7 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface PlaceViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating>
 
 @property (nonatomic, weak, nullable) id<PlaceViewControllecDelegate> delegate;
-
 @property (nonatomic,copy) void (^onSelectPlace)(id place, PlaceType placeType, DataSourceType dataType);
 
 - (instancetype)initWithType: (PlaceType)type;

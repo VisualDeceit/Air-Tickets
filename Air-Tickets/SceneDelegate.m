@@ -6,11 +6,9 @@
 //
 
 #import "SceneDelegate.h"
-#import "MainViewController.h"
+#import "CustomTabBarController.h"
 
 @interface SceneDelegate ()
-
-@property (strong, nonatomic) UINavigationController *navigationController;
 
 @end
 
@@ -24,16 +22,11 @@
     self.window = [[UIWindow alloc]initWithFrame:windowFrame];
     [self.window makeKeyAndVisible];
     
-    //MainViewController init
-    MainViewController *mainViewController = [MainViewController new];
-    mainViewController.title = @"Search tickets";
-    
-    //NavigationController init
-    self.navigationController = [[UINavigationController alloc]initWithRootViewController:mainViewController];
-    
+    //tabBarController
+    CustomTabBarController *tabBarController = [[CustomTabBarController alloc] init];
     
     //set RootViewController
-    [self.window setRootViewController:self.navigationController];
+    [self.window setRootViewController: tabBarController];
     
     //set setWindowScene
     UIWindowScene *windowScene = (UIWindowScene *)scene;
