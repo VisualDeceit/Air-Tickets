@@ -127,11 +127,6 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-//block test
-- (void)function: (void (^)(NSString *))callback {
-    callback(@"kutut");
-}
-
 //MARK: - UISearchBarDelegate
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     [_filteredArray removeAllObjects];
