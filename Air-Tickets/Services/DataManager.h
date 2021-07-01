@@ -36,7 +36,7 @@ typedef struct SearchRequest {
 + (instancetype) sharedInstance;
 - (void) loadData;
 - (City *)cityForIATA:(NSString *)iata;
-- (City *)searchCityBy:(NSString *)name;
+- (City *)cityForLocation:(CLLocation *)location;
 
 @end
 
