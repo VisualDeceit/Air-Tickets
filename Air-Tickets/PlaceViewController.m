@@ -17,6 +17,7 @@
 @property (nonatomic, strong) UISegmentedControl *segmentedControl;
 @property (nonatomic, strong) NSArray *currentArray;
 @property (nonatomic, strong) NSMutableArray *filteredArray;
+@property (nonatomic, strong) UISearchController *searchController;
 
 @end
 
@@ -36,26 +37,31 @@
     [self configureUI];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBar.prefersLargeTitles = YES;
-}
-
 - (void)configureUI {
     self.view.backgroundColor = [UIColor systemBackgroundColor];
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     
-    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 116, self.view.bounds.size.width, 44.0)];
-    _searchBar.searchBarStyle = UISearchBarStyleMinimal;
-    [self.view addSubview:_searchBar];
-    _searchBar.delegate = self;
+//    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 116, self.view.bounds.size.width, 44.0)];
+//    _searchBar.searchBarStyle = UISearchBarStyleMinimal;
+//    [self.view addSubview:_searchBar];
+//    _searchBar.delegate = self;
     
-    CGRect rect = CGRectMake(0, 160, self.view.bounds.size.width, self.view.bounds.size.height - _searchBar.frame.size.height);
-    _tableView = [[UITableView alloc] initWithFrame:rect style:UITableViewStylePlain];
+    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    _searchController.obscuresBackgroundDuringPresentation = NO;
+    _searchController.searchResultsUpdater = self;
+    self.navigationItem.searchController = _searchController;
+
+    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
+    if (@available(iOS 11.0, *)) {
+           self.navigationItem.searchController = _searchController;
+       } else {
+           _tableView.tableHeaderView = _searchController.searchBar;
+       }
+
     _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Cities", @"Airports"]];
     [_segmentedControl addTarget:self action:@selector(changeSource) forControlEvents:UIControlEventValueChanged];
     _segmentedControl.tintColor = [UIColor blackColor];
@@ -82,13 +88,29 @@
         default:
             break;
     }
+    [self setSearchBarPlaceholderText];
     [_filteredArray removeAllObjects];
     [_filteredArray addObjectsFromArray: _currentArray];
     [_tableView reloadData];
 }
 
-// MARK:- DataSource
+- (void) setSearchBarPlaceholderText {
+    NSString *placeholderTemplate;
+    if (_placeType == PlaceTypeDeparture) {
+        placeholderTemplate = @"departure";
+    } else {
+        placeholderTemplate = @"destination";
+    }
+    
+    if (_segmentedControl.selectedSegmentIndex == 0) {
+        _searchController.searchBar.placeholder = [NSString stringWithFormat:@"Search %@ city...", placeholderTemplate];
+    }
+    else if (_segmentedControl.selectedSegmentIndex == 1) {
+        _searchController.searchBar.placeholder = [NSString stringWithFormat:@"Search %@ airport...", placeholderTemplate];
+    }
+}
 
+// MARK:- TableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _filteredArray.count;
 }
@@ -114,7 +136,7 @@
     return cell;
 }
 
-// MARK:- Delegate
+// MARK:- TableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     DataSourceType dataType = (int)_segmentedControl.selectedSegmentIndex + 1;
    
@@ -148,6 +170,11 @@
         }
         [_tableView reloadData];
     }
+}
+
+//MARK: - UISearchResultsUpdating
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    
 }
 
 @end

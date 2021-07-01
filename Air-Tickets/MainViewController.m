@@ -43,15 +43,12 @@
     [DataManager.sharedInstance loadData];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBar.prefersLargeTitles = NO;    
-}
-
 - (void) configureUI {
     [self.view setBackgroundColor:[UIColor systemBackgroundColor]];
+    
+    self.navigationController.navigationBar.prefersLargeTitles = YES;
 
-    CGRect departureLabelFrame = CGRectMake(X_PADDING, 80.0, SCREEN_WIDTH - X_PADDING, 25.0);
+    CGRect departureLabelFrame = CGRectMake(X_PADDING, 114.0, SCREEN_WIDTH - X_PADDING, 25.0);
     self.departureLabel = [[UILabel alloc] initWithFrame: departureLabelFrame];
     self.departureLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightBold];
     self.departureLabel.textColor = [UIColor labelColor];
