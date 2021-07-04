@@ -33,6 +33,7 @@
 - (void)configureMap {
     _mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
     _mapView.showsUserLocation = YES;
+    _mapView.delegate = self;
     [self.view addSubview:_mapView];
     
     _locationService = [[LocationService alloc] init];
@@ -55,6 +56,22 @@
     }
 }
 
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    static NSString *identifier = @"MarkerIdentifier";
+    MKMarkerAnnotationView *annotationView = (MKMarkerAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+    if (!annotationView) {
+        annotationView = [[MKMarkerAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+        annotationView.canShowCallout = YES;
+        annotationView.calloutOffset = CGPointMake(-5.0, 5.0);
+        
+        UIButton *addToFavoritesButton = [UIButton systemButtonWithImage:[UIImage systemImageNamed:@"star"] target:self action:@selector(addToFavoritesButtonDidTap:)];
+        addToFavoritesButton.tintColor = [UIColor labelColor];
+        annotationView.rightCalloutAccessoryView = addToFavoritesButton;
+    }
+    annotationView.annotation = annotation;
+    return annotationView;
+}
+
 - (void)setPrices:(NSArray *)prices {
     _prices = prices;
     [_mapView removeAnnotations: _mapView.annotations];
@@ -68,6 +85,9 @@
             [self->_mapView addAnnotation: annotation];
         });
     }
+}
+
+- (void)addToFavoritesButtonDidTap:(id)sender {
 }
 
 @end

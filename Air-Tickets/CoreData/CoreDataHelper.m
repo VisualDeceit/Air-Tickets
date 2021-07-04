@@ -73,8 +73,9 @@
     request.predicate = [NSPredicate predicateWithFormat:@"price == %ld AND airline == %@ AND from == %@ AND to == %@ AND departure == %@ AND flightNumber == %ld", (long)ticket.price.integerValue, ticket.airline, ticket.from, ticket.to, ticket.departure, (long)ticket.flightNumber.integerValue];
     NSError *error = nil;
     FavoriteTicketMO *result = [[[self managedObjectContext] executeFetchRequest:request error:&error] firstObject];
-    if (!result) {
+    if (error != NULL) {
         NSLog(@"Error fetching favorite ticket object: %@\n%@", [error localizedDescription], [error userInfo]);
+        abort();
     }
     return result;
 }
@@ -110,8 +111,9 @@
     [request setReturnsObjectsAsFaults:NO];
     NSError *error = nil;
     NSArray *results = [[self managedObjectContext] executeFetchRequest:request error:&error];
-    if (!results) {
+    if (error != NULL) {
         NSLog(@"Error fetching favorite ticket objects: %@\n%@", [error localizedDescription], [error userInfo]);
+        abort();
     }
     return results;
 }

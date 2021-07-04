@@ -15,7 +15,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MapPriceViewController : UIViewController
+@interface MapPriceViewController : UIViewController <MKMapViewDelegate>
 
 @end
 

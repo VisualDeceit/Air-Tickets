@@ -79,7 +79,11 @@
     dateFormatter.dateFormat = @"dd MMMM yyyy hh:mm";
     _dateLabel.text = [dateFormatter stringFromDate:ticket.departure];
     
-    [_favoriteSign setHidden:YES];
+    if (_showFavoriteSign) {
+        [_favoriteSign setHidden:NO];
+    } else {
+        [_favoriteSign setHidden:YES];
+    }
     
     NSURL *urlLogo = AirlineLogo(ticket.airline);
     
@@ -103,7 +107,7 @@
     dateFormatter.dateFormat = @"dd MMMM yyyy hh:mm";
     _dateLabel.text = [dateFormatter stringFromDate:favoriteTicket.departure];
     
-    [_favoriteSign setHidden:NO];
+    [_favoriteSign setHidden:YES];
     
     NSURL *urlLogo = AirlineLogo(favoriteTicket.airline);
     
