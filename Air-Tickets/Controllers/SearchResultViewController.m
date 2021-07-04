@@ -57,7 +57,12 @@
     
     if (isFavorites) {
         self.navigationController.navigationBar.prefersLargeTitles = YES;
-        _tickets = [[CoreDataHelper sharedInstance] favorites];
+        if (_segmentedControl.selectedSegmentIndex == 0) {
+            _tickets = [[CoreDataHelper sharedInstance] favorites:FavoriteSourceSearch];
+        }
+        else if (_segmentedControl.selectedSegmentIndex == 1) {
+            _tickets = [[CoreDataHelper sharedInstance] favorites:FavoriteSourcePriceMap];
+        }
         [self.tableView reloadData];
         
         _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"From Search", @"From Price Map"]];
@@ -109,7 +114,7 @@
         }];
     } else {
         favoriteAction = [UIAlertAction actionWithTitle:@"Add to favourites" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [[CoreDataHelper sharedInstance] addToFavorite:[self->_tickets objectAtIndex:indexPath.row]];
+            [[CoreDataHelper sharedInstance] addToFavorite:[self->_tickets objectAtIndex:indexPath.row] from:FavoriteSourceSearch];
             [self.tableView  reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:NO];
         }];
     }
@@ -135,17 +140,14 @@
 - (void)changeSource {
     switch (_segmentedControl.selectedSegmentIndex) {
         case 0:
-            //_currentArray = [[DataManager sharedInstance] cities];
+            _tickets = [[CoreDataHelper sharedInstance] favorites:FavoriteSourceSearch];
             break;
         case 1:
-            //  _currentArray = [[DataManager sharedInstance] airports];
+            _tickets = [[CoreDataHelper sharedInstance] favorites:FavoriteSourcePriceMap];
             break;
         default:
             break;
     }
-    // [self setSearchBarPlaceholderText];
-    // [_filteredArray removeAllObjects];
-    //[_filteredArray addObjectsFromArray: _currentArray];
     [_tableView reloadData];
 }
 

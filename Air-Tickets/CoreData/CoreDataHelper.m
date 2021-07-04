@@ -80,7 +80,7 @@
     return result;
 }
 
-- (void)addToFavorite:(Ticket *)ticket {
+- (void)addToFavorite:(Ticket *)ticket from:(FavoriteSource)source {
     //создание записи через NSEntityDescription
     ///FavoriteTicketMO *favorite = [NSEntityDescription insertNewObjectForEntityForName:@"FavoriteTicket" inManagedObjectContext:[self managedObjectContext]];
     //создание записи через инициализатор (IOS10+)
@@ -94,6 +94,7 @@
     favorite.from = ticket.from;
     favorite.to = ticket.to;
     favorite.created = [NSDate date];
+    favorite.source = source;
     [self save];
 }
 
@@ -105,8 +106,9 @@
     }
 }
 
-- (NSArray *)favorites {
+- (NSArray *)favorites:(FavoriteSource)source {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"FavoriteTicket"];
+    request.predicate = [NSPredicate predicateWithFormat:@"source == %ld", (long)source];
     //request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO]];
     [request setReturnsObjectsAsFaults:NO];
     NSError *error = nil;

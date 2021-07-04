@@ -9,9 +9,10 @@
         <attribute name="from" optional="YES" attributeType="String"/>
         <attribute name="price" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="returnDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="source" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="to" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="FavoriteTicket" positionX="-63" positionY="-18" width="128" height="178"/>
+        <element name="FavoriteTicket" positionX="-63" positionY="-18" width="128" height="193"/>
     </elements>
 </model>

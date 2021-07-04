@@ -13,12 +13,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef enum FavoriteSource {
+    FavoriteSourceSearch,
+    FavoriteSourcePriceMap,
+} FavoriteSource;
+
 @interface CoreDataHelper : NSObject
 
 + (instancetype)sharedInstance;
-- (void)addToFavorite:(Ticket *)ticket;
+- (void)addToFavorite:(Ticket *)ticket from:(FavoriteSource)source;
 - (void)removeFromFavorite:(Ticket *)ticket;
-- (NSArray *)favorites;
+- (NSArray *)favorites:(FavoriteSource)source;
 - (BOOL)isFavorite:(Ticket *)ticket;
 
 @end

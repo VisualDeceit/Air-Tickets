@@ -2,7 +2,7 @@
 //  FavoriteTicketMO+CoreDataProperties.h
 //  Air-Tickets
 //
-//  Created by Alexander Fomin on 04.07.2021.
+//  Created by Alexander Fomin on 05.07.2021.
 //
 //
 
@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSDate *returnDate;
 @property (nullable, nonatomic, copy) NSDate *expires;
 @property (nullable, nonatomic, copy) NSDate *created;
+@property (nonatomic) int16_t source;
 
 @end
 

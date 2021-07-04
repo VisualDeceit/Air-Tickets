@@ -2,7 +2,7 @@
 //  FavoriteTicketMO+CoreDataClass.h
 //  Air-Tickets
 //
-//  Created by Alexander Fomin on 04.07.2021.
+//  Created by Alexander Fomin on 05.07.2021.
 //
 //
 
