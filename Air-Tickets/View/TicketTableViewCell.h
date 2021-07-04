@@ -7,12 +7,14 @@
 
 #import <UIKit/UIKit.h>
 #import "Ticket.h"
+#import "CoreDataHelper.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TicketTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) Ticket *ticket;
+@property (nonatomic, strong) FavoriteTicketMO *favoriteTicket;
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(nullable NSString *)reuseIdentifier;
 

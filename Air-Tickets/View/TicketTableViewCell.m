@@ -14,6 +14,7 @@
 @property (nonatomic, strong) UILabel *priceLabel;
 @property (nonatomic, strong) UILabel *placesLabel;
 @property (nonatomic, strong) UILabel *dateLabel;
+@property (nonatomic, strong) UIImageView *favoriteSign;
 
 @end
 
@@ -47,6 +48,12 @@
         _dateLabel.font = [UIFont systemFontOfSize:15.0 weight:UIFontWeightRegular];
         [self.contentView addSubview:_dateLabel];
         
+        _favoriteSign = [[UIImageView alloc] initWithImage:[UIImage systemImageNamed:@"star.fill"]];
+        _favoriteSign.contentMode = UIViewContentModeScaleAspectFit;
+        _favoriteSign.tintColor = [UIColor labelColor];
+        [self.contentView addSubview:_favoriteSign];
+        
+        
     }
     return self;
 }
@@ -59,6 +66,7 @@
     _airlineLogoView.frame = CGRectMake(CGRectGetMaxX(_priceLabel.frame) + 10.0, 10.0, 80.0, 80.0);
     _placesLabel.frame = CGRectMake(10.0, CGRectGetMaxY(_priceLabel.frame) + 16.0, 100.0, 20.0);
     _dateLabel.frame = CGRectMake(10.0, CGRectGetMaxY(_placesLabel.frame) + 8.0, self.contentView.frame.size.width - 20.0, 20.0);
+    _favoriteSign.frame = CGRectMake(self.contentView.frame.size.width - 28, self.contentView.frame.size.height - 28, 20, 20);
 }
 
 - (void)setTicket:(Ticket *)ticket {
@@ -70,7 +78,34 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"dd MMMM yyyy hh:mm";
     _dateLabel.text = [dateFormatter stringFromDate:ticket.departure];
+    
+    [_favoriteSign setHidden:YES];
+    
     NSURL *urlLogo = AirlineLogo(ticket.airline);
+    
+    NSURLSessionDownloadTask *downloadLogoTask = [[NSURLSession sharedSession] downloadTaskWithURL:urlLogo completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        UIImage  *downloadedImage = [UIImage imageWithData:
+            [NSData dataWithContentsOfURL:location]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self->_airlineLogoView.image = downloadedImage;
+        });
+    }];
+    [downloadLogoTask resume];
+}
+
+- (void)setFavoriteTicket:(FavoriteTicketMO *)favoriteTicket {
+    _favoriteTicket = favoriteTicket;
+    
+    _priceLabel.text = [NSString stringWithFormat:@"%lld руб.", favoriteTicket.price];
+    _placesLabel.text = [NSString stringWithFormat:@"%@ - %@", favoriteTicket.from, favoriteTicket.to];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"dd MMMM yyyy hh:mm";
+    _dateLabel.text = [dateFormatter stringFromDate:favoriteTicket.departure];
+    
+    [_favoriteSign setHidden:NO];
+    
+    NSURL *urlLogo = AirlineLogo(favoriteTicket.airline);
     
     NSURLSessionDownloadTask *downloadLogoTask = [[NSURLSession sharedSession] downloadTaskWithURL:urlLogo completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         UIImage  *downloadedImage = [UIImage imageWithData:

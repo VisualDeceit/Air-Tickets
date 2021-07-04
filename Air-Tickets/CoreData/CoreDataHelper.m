@@ -17,7 +17,7 @@
 
 @implementation CoreDataHelper
 
-+ (instancetype)sharedInstance{
++ (instancetype)sharedInstance {
     static CoreDataHelper *instance;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -44,20 +44,17 @@
     
     [self setManagedObjectContext:_managedObjectContext];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        NSPersistentStoreCoordinator *psc = [[self managedObjectContext] persistentStoreCoordinator];
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSURL *documentsURL = [[fileManager URLsForDirectory:NSDocumentationDirectory inDomains:NSUserDomainMask] lastObject];
-        
-        NSURL *storeURL = [documentsURL URLByAppendingPathComponent:@"DataModel.sqlite"];
-        
-        NSError *error = nil;
-        NSPersistentStore *store = [psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error];
-        if (!store) {
-            NSLog(@"Failed to initalize persistent store: %@\n%@", [error localizedDescription], [error userInfo]);
-            abort();
-        }
-    });
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSURL *documentsURL = [[fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    
+    NSURL *storeURL = [documentsURL URLByAppendingPathComponent:@"DataModel.sqlite"];
+    
+    NSError *error = nil;
+    NSPersistentStore *store = [_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error];
+    if (!store) {
+        NSLog(@"Failed to initalize persistent store: %@\n%@", [error localizedDescription], [error userInfo]);
+        abort();
+    }
 }
 
 - (void)save {
@@ -68,13 +65,18 @@
 }
 
 - (BOOL)isFavorite:(Ticket *)ticket {
-    return [self favoriteFromTicket:ticket];
+    return [self favoriteFromTicket:ticket] != nil;
 }
 
 - (FavoriteTicketMO *)favoriteFromTicket:(Ticket *)ticket {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"FavoriteTicket"];
-    request.predicate = [NSPredicate predicateWithFormat:@"price == %ld AND airline == %@ AND from == %@ AND to == %@ AND departure == %@ AND expires == %@ AND flightNumber == %ld", (long)ticket.price.integerValue, ticket.airline, ticket.from, ticket.to, ticket.departure, ticket.expires, (long)ticket.flightNumber.integerValue];
-    return [[[self managedObjectContext] executeFetchRequest:request error:nil] firstObject];
+    request.predicate = [NSPredicate predicateWithFormat:@"price == %ld AND airline == %@ AND from == %@ AND to == %@ AND departure == %@ AND flightNumber == %ld", (long)ticket.price.integerValue, ticket.airline, ticket.from, ticket.to, ticket.departure, (long)ticket.flightNumber.integerValue];
+    NSError *error = nil;
+    FavoriteTicketMO *result = [[[self managedObjectContext] executeFetchRequest:request error:&error] firstObject];
+    if (!result) {
+        NSLog(@"Error fetching favorite ticket object: %@\n%@", [error localizedDescription], [error userInfo]);
+    }
+    return result;
 }
 
 - (void)addToFavorite:(Ticket *)ticket {
@@ -104,8 +106,14 @@
 
 - (NSArray *)favorites {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"FavoriteTicket"];
-    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO]];
-    return [[self managedObjectContext] executeFetchRequest:request error:nil];
+    //request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO]];
+    [request setReturnsObjectsAsFaults:NO];
+    NSError *error = nil;
+    NSArray *results = [[self managedObjectContext] executeFetchRequest:request error:&error];
+    if (!results) {
+        NSLog(@"Error fetching favorite ticket objects: %@\n%@", [error localizedDescription], [error userInfo]);
+    }
+    return results;
 }
 
 
