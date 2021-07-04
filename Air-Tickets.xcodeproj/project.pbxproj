@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		151E55F7268B49C4005D7D05 /* MapPriceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 151E55F6268B49C4005D7D05 /* MapPriceViewController.m */; };
+		151E5607268DBEFA005D7D05 /* CustomTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 151E5606268DBEFA005D7D05 /* CustomTabBarController.m */; };
 		157EE81E267CCD6D000750A0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 157EE81D267CCD6D000750A0 /* AppDelegate.m */; };
 		157EE821267CCD6D000750A0 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 157EE820267CCD6D000750A0 /* SceneDelegate.m */; };
 		157EE829267CCD71000750A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 157EE828267CCD71000750A0 /* Assets.xcassets */; };
@@ -33,6 +34,8 @@
 /* Begin PBXFileReference section */
 		151E55F5268B49C3005D7D05 /* MapPriceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapPriceViewController.h; sourceTree = "<group>"; };
 		151E55F6268B49C4005D7D05 /* MapPriceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapPriceViewController.m; sourceTree = "<group>"; };
+		151E5605268DBEFA005D7D05 /* CustomTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomTabBarController.h; sourceTree = "<group>"; };
+		151E5606268DBEFA005D7D05 /* CustomTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomTabBarController.m; sourceTree = "<group>"; };
 		157EE819267CCD6D000750A0 /* Air-Tickets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Air-Tickets.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		157EE81C267CCD6D000750A0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		157EE81D267CCD6D000750A0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -83,6 +86,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		151E5603268DBD9A005D7D05 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				157EE841267CD7B7000750A0 /* SearchResultViewController.h */,
+				157EE842267CD7B7000750A0 /* SearchResultViewController.m */,
+				151E55F5268B49C3005D7D05 /* MapPriceViewController.h */,
+				151E55F6268B49C4005D7D05 /* MapPriceViewController.m */,
+				157EE838267CD017000750A0 /* MainViewController.h */,
+				157EE839267CD017000750A0 /* MainViewController.m */,
+				157EE8582681D73F000750A0 /* PlaceViewControllecDelegate.h */,
+				157EE84C2681C801000750A0 /* PlaceViewController.h */,
+				157EE84D2681C801000750A0 /* PlaceViewController.m */,
+				151E5605268DBEFA005D7D05 /* CustomTabBarController.h */,
+				151E5606268DBEFA005D7D05 /* CustomTabBarController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		157EE810267CCD6D000750A0 = {
 			isa = PBXGroup;
 			children = (
@@ -106,19 +127,11 @@
 				157EE8542681CA57000750A0 /* Services */,
 				157EE86E2681DEFC000750A0 /* Data */,
 				1583FBA82684DDE50077B65B /* View */,
+				151E5603268DBD9A005D7D05 /* Controllers */,
 				157EE81C267CCD6D000750A0 /* AppDelegate.h */,
 				157EE81D267CCD6D000750A0 /* AppDelegate.m */,
 				157EE81F267CCD6D000750A0 /* SceneDelegate.h */,
 				157EE820267CCD6D000750A0 /* SceneDelegate.m */,
-				157EE841267CD7B7000750A0 /* SearchResultViewController.h */,
-				151E55F5268B49C3005D7D05 /* MapPriceViewController.h */,
-				151E55F6268B49C4005D7D05 /* MapPriceViewController.m */,
-				157EE842267CD7B7000750A0 /* SearchResultViewController.m */,
-				157EE838267CD017000750A0 /* MainViewController.h */,
-				157EE839267CD017000750A0 /* MainViewController.m */,
-				157EE8582681D73F000750A0 /* PlaceViewControllecDelegate.h */,
-				157EE84C2681C801000750A0 /* PlaceViewController.h */,
-				157EE84D2681C801000750A0 /* PlaceViewController.m */,
 				157EE828267CCD71000750A0 /* Assets.xcassets */,
 				157EE82A267CCD71000750A0 /* LaunchScreen.storyboard */,
 				157EE82D267CCD71000750A0 /* Info.plist */,
@@ -255,6 +268,7 @@
 				1583FBA62684DDDA0077B65B /* TicketTableViewCell.m in Sources */,
 				157EE81E267CCD6D000750A0 /* AppDelegate.m in Sources */,
 				157EE8522681CA4B000750A0 /* DataManager.m in Sources */,
+				151E5607268DBEFA005D7D05 /* CustomTabBarController.m in Sources */,
 				15A444B4268AF494006A1154 /* MapPrice.m in Sources */,
 				157EE82F267CCD71000750A0 /* main.m in Sources */,
 				157EE843267CD7B7000750A0 /* SearchResultViewController.m in Sources */,
