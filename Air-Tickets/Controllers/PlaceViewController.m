@@ -145,12 +145,12 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     if (_segmentedControl.selectedSegmentIndex == 0) {
-        City *city = self.isFiltering ? [_filteredArray objectAtIndex:indexPath.row] : [_currentArray objectAtIndex:indexPath.row];
+        City *city = self.filtering ? [_filteredArray objectAtIndex:indexPath.row] : [_currentArray objectAtIndex:indexPath.row];
         cell.textLabel.text = city.name;
         cell.detailTextLabel.text = city.code;
     }
     else if (_segmentedControl.selectedSegmentIndex == 1) {
-        Airport *airport = self.isFiltering ? [_filteredArray objectAtIndex:indexPath.row] : [_currentArray objectAtIndex:indexPath.row];
+        Airport *airport = self.filtering ? [_filteredArray objectAtIndex:indexPath.row] : [_currentArray objectAtIndex:indexPath.row];
         cell.textLabel.text = airport.name;
         cell.detailTextLabel.text = airport.code;
     }
@@ -166,7 +166,7 @@
     //[self.delegate selectPlace:[_currentArray objectAtIndex:indexPath.row] withType:_placeType andDataType:dataType];
     
     //с помощью блока
-    if (self.isFiltering) {
+    if (self.filtering) {
         self.onSelectPlace([_filteredArray objectAtIndex:indexPath.row], _placeType, dataType);
     } else {
         self.onSelectPlace([_currentArray objectAtIndex:indexPath.row], _placeType, dataType);
