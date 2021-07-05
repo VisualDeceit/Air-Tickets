@@ -175,10 +175,10 @@
 			isa = PBXGroup;
 			children = (
 				151E560B26922012005D7D05 /* CoreData */,
-				157EE8562681D2CB000750A0 /* Model */,
+				157EE8562681D2CB000750A0 /* Models */,
 				157EE8542681CA57000750A0 /* Services */,
 				157EE86E2681DEFC000750A0 /* Data */,
-				1583FBA82684DDE50077B65B /* View */,
+				1583FBA82684DDE50077B65B /* Views */,
 				151E562E2692C09F005D7D05 /* Annotations */,
 				151E5603268DBD9A005D7D05 /* Controllers */,
 				157EE81C267CCD6D000750A0 /* AppDelegate.h */,
@@ -206,7 +206,7 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		157EE8562681D2CB000750A0 /* Model */ = {
+		157EE8562681D2CB000750A0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				157EE85B2681DB36000750A0 /* Country.h */,
@@ -220,7 +220,7 @@
 				15A444B2268AF494006A1154 /* MapPrice.h */,
 				15A444B3268AF494006A1154 /* MapPrice.m */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		157EE86E2681DEFC000750A0 /* Data */ = {
@@ -233,7 +233,7 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
-		1583FBA82684DDE50077B65B /* View */ = {
+		1583FBA82684DDE50077B65B /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				151E56282692BC64005D7D05 /* PriceMapTicketTableViewCell.h */,
@@ -243,7 +243,7 @@
 				151E56402692C9DC005D7D05 /* AnnotationButton.h */,
 				151E56412692C9DC005D7D05 /* AnnotationButton.m */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
