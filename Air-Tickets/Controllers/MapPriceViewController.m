@@ -64,9 +64,10 @@
         annotationView.canShowCallout = YES;
         annotationView.calloutOffset = CGPointMake(-5.0, 5.0);
         
-        UIButton *addToFavoritesButton = [UIButton systemButtonWithImage:[UIImage systemImageNamed:@"star"] target:self action:@selector(addToFavoritesButtonDidTap:)];
+        AnnotationButton *addToFavoritesButton = [AnnotationButton systemButtonWithImage:[UIImage systemImageNamed:@"star"] target:self action:@selector(addToFavoritesButtonDidTap:)];
         addToFavoritesButton.tintColor = [UIColor labelColor];
         annotationView.rightCalloutAccessoryView = addToFavoritesButton;
+        addToFavoritesButton.annotation = (CustomPointAnnotation *)annotation;
     }
     annotationView.annotation = annotation;
     return annotationView;
@@ -78,16 +79,18 @@
     
     for (MapPrice *price in prices) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+            CustomPointAnnotation *annotation = [[CustomPointAnnotation alloc] init];
             annotation.title = [NSString stringWithFormat:@"%@ (%@)", price.destination.name, price.destination.code];
             annotation.subtitle = [NSString stringWithFormat:@"%ld руб.", (long)price.value];
             annotation.coordinate = price.destination.coordinate;
+            annotation.price = price;
             [self->_mapView addAnnotation: annotation];
         });
     }
 }
 
-- (void)addToFavoritesButtonDidTap:(id)sender {
+- (void)addToFavoritesButtonDidTap:(AnnotationButton *)button {
+    NSLog(@"%ld", (long)button.annotation.price.value);
 }
 
 @end

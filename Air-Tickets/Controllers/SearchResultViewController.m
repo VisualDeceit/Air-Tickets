@@ -6,7 +6,7 @@
 //
 
 #import "SearchResultViewController.h"
-#import "TicketTableViewCell.h"
+#import "SearchTicketTableViewCell.h"
 #import "CoreDataHelper.h"
 
 #define TicketCellReuseIdentifier @"TicketCellIdentifier"
@@ -81,7 +81,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TicketTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TicketCellReuseIdentifier forIndexPath:indexPath];
+    SearchTicketTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TicketCellReuseIdentifier forIndexPath:indexPath];
     
     if (isFavorites) {
         cell.favoriteTicket = [_tickets objectAtIndex:indexPath.row];
@@ -133,7 +133,7 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [_tableView registerClass:[TicketTableViewCell class] forCellReuseIdentifier:TicketCellReuseIdentifier];
+    [_tableView registerClass:[SearchTicketTableViewCell class] forCellReuseIdentifier:TicketCellReuseIdentifier];
     [self.view addSubview:_tableView];
 }
 

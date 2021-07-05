@@ -1,14 +1,14 @@
 //
-//  TicketTableViewCell.m
+//  SearchTicketTableViewCell.m
 //  Air-Tickets
 //
 //  Created by Alexander Fomin on 24.06.2021.
 //
 
-#import "TicketTableViewCell.h"
+#import "SearchTicketTableViewCell.h"
 #import "APIManager.h"
 
-@interface TicketTableViewCell()
+@interface SearchTicketTableViewCell()
 
 @property (nonatomic, strong) UIImageView *airlineLogoView;
 @property (nonatomic, strong) UILabel *priceLabel;
@@ -18,7 +18,7 @@
 
 @end
 
-@implementation TicketTableViewCell
+@implementation SearchTicketTableViewCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];

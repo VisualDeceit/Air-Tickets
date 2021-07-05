@@ -1,5 +1,5 @@
 //
-//  TicketTableViewCell.h
+//  SearchTicketTableViewCell.h
 //  Air-Tickets
 //
 //  Created by Alexander Fomin on 24.06.2021.
@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TicketTableViewCell : UITableViewCell
+@interface SearchTicketTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) Ticket *ticket;
 @property (nonatomic, strong) FavoriteTicketMO *favoriteTicket;
