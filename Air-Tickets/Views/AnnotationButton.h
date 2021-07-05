@@ -6,13 +6,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CustomPointAnnotation.h"
+#import "PriceMapAnnotation.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AnnotationButton : UIButton
 
-@property (nonatomic, weak) CustomPointAnnotation *annotation;
+@property (nonatomic, weak) PriceMapAnnotation *annotation;
 
 @end
 

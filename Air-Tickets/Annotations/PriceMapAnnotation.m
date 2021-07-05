@@ -10,4 +10,6 @@
 
 @implementation PriceMapAnnotation
 
+@synthesize coordinate,title,subtitle, ticket;
+
 @end

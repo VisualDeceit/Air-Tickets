@@ -12,7 +12,7 @@
 #import "DataManager.h"
 #import "MapPrice.h"
 #import <CoreLocation/CoreLocation.h>
-#import "CustomPointAnnotation.h"
+#import "PriceMapAnnotation.h"
 #import "AnnotationButton.h"
 #import "CoreDataHelper.h"
 

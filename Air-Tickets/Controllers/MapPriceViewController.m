@@ -57,7 +57,10 @@
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
-    static NSString *identifier = @"MarkerIdentifier";
+    //прячем анотацию с позцией пользователя
+    if ([annotation isKindOfClass:[MKUserLocation class]])
+        return  nil;
+    static NSString *identifier = @"Annotation";
     MKMarkerAnnotationView *annotationView = (MKMarkerAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
     if (!annotationView) {
         annotationView = [[MKMarkerAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
@@ -67,7 +70,17 @@
         AnnotationButton *addToFavoritesButton = [AnnotationButton systemButtonWithImage:[UIImage systemImageNamed:@"star"] target:self action:@selector(addToFavoritesButtonDidTap:)];
         addToFavoritesButton.tintColor = [UIColor labelColor];
         annotationView.rightCalloutAccessoryView = addToFavoritesButton;
-        addToFavoritesButton.annotation = (CustomPointAnnotation *)annotation;
+        //добавляем к кнопке свойство аннотации
+        addToFavoritesButton.annotation = (PriceMapAnnotation *)annotation;
+    }
+    //забираем билет из аннотации для отображения добавленных в избранное
+    PriceMapAnnotation *pmAnnotation = (PriceMapAnnotation *)annotation;
+    if ([[CoreDataHelper sharedInstance] isFavorite:pmAnnotation.ticket]) {
+        AnnotationButton *favoritesButton = (AnnotationButton *)annotationView.rightCalloutAccessoryView;
+        [favoritesButton setImage:[UIImage systemImageNamed:@"star.fill"] forState:UIControlStateNormal];
+    } else {
+        AnnotationButton *favoritesButton = (AnnotationButton *)annotationView.rightCalloutAccessoryView;
+        [favoritesButton setImage:[UIImage systemImageNamed:@"star"] forState:UIControlStateNormal];
     }
     annotationView.annotation = annotation;
     return annotationView;
@@ -79,7 +92,7 @@
     
     for (MapPrice *price in prices) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            CustomPointAnnotation *annotation = [[CustomPointAnnotation alloc] init];
+            PriceMapAnnotation *annotation = [[PriceMapAnnotation alloc] init];
             annotation.title = [NSString stringWithFormat:@"%@ (%@)", price.destination.name, price.destination.code];
             annotation.subtitle = [NSString stringWithFormat:@"%ld руб.", (long)price.value];
             annotation.coordinate = price.destination.coordinate;
