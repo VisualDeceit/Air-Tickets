@@ -83,14 +83,17 @@
             annotation.title = [NSString stringWithFormat:@"%@ (%@)", price.destination.name, price.destination.code];
             annotation.subtitle = [NSString stringWithFormat:@"%ld руб.", (long)price.value];
             annotation.coordinate = price.destination.coordinate;
-            annotation.price = price;
+            
+            Ticket *ticket = [[Ticket alloc] initWithPrice:price];
+            annotation.ticket = ticket;
+            
             [self->_mapView addAnnotation: annotation];
         });
     }
 }
 
 - (void)addToFavoritesButtonDidTap:(AnnotationButton *)button {
-    NSLog(@"%ld", (long)button.annotation.price.value);
+    NSLog(@"%@", button.annotation.ticket.price);
 }
 
 @end

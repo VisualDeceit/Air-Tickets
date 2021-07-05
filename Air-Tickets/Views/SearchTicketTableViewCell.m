@@ -22,8 +22,8 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    
     if (self) {
-        
         self.contentView.layer.shadowColor = [[[UIColor blackColor] colorWithAlphaComponent:0.2] CGColor];
         self.contentView.layer.shadowOffset = CGSizeMake(1.0, 1.0);
         self.contentView.layer.shadowRadius = 10.0;
@@ -51,9 +51,7 @@
         _favoriteSign = [[UIImageView alloc] initWithImage:[UIImage systemImageNamed:@"star.fill"]];
         _favoriteSign.contentMode = UIViewContentModeScaleAspectFit;
         _favoriteSign.tintColor = [UIColor labelColor];
-        [self.contentView addSubview:_favoriteSign];
-        
-        
+        [self.contentView addSubview:_favoriteSign];  
     }
     return self;
 }

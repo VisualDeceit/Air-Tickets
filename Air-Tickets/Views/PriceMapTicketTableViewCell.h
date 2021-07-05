@@ -6,10 +6,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Ticket.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PriceMapTicketTableViewCell : UITableViewCell
+
+@property (nonatomic, strong) Ticket *ticket;
 
 @end
 
