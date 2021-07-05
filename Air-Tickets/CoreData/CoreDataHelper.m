@@ -106,11 +106,24 @@
     }
 }
 
-- (NSArray *)favorites:(FavoriteSource)source {
+- (NSArray *)favorites:(FavoriteSource)source sort:(FavoriteSortType)sort {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"FavoriteTicket"];
     request.predicate = [NSPredicate predicateWithFormat:@"source == %ld", (long)source];
-    //request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO]];
-    [request setReturnsObjectsAsFaults:NO];
+    switch (sort) {
+        case FavoriteSortTypeDescPrice:
+            request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"price" ascending:NO]];
+            break;
+        case FavoriteSortTypeAscPrice:
+            request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"price" ascending:YES]];
+            break;
+        case FavoriteSortTypeDescDate:
+            request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"departure" ascending:NO]];
+            break;
+        case FavoriteSortTypeAscDate:
+            request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"departure" ascending:YES]];
+            break;
+    }
+    
     NSError *error = nil;
     NSArray *results = [[self managedObjectContext] executeFetchRequest:request error:&error];
     if (error != NULL) {

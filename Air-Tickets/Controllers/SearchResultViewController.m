@@ -12,6 +12,8 @@
 @property (nonatomic, strong) NSArray *tickets;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UISegmentedControl *segmentedControl;
+@property (nonatomic, strong) UIBarButtonItem *optionsBarItem;
+@property (nonatomic) FavoriteSortType favoriteSortType;
 
 @end
 
@@ -35,6 +37,7 @@
     if (self)
     {
         isFavorites = YES;
+        _favoriteSortType = FavoriteSortTypeAscPrice;
         _tickets = [NSArray new];
         self.title = @"Favorites";
     }
@@ -63,7 +66,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SearchTicketTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:SearchTicketCellReuseIdentifier forIndexPath:indexPath];
-    
     if (isFavorites) {
         cell.favoriteTicket = [_tickets objectAtIndex:indexPath.row];
     } else {
@@ -74,9 +76,7 @@
         }
         cell.ticket = [_tickets objectAtIndex:indexPath.row];
     }
-
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
     return cell;
 }
 
@@ -118,6 +118,7 @@
     [_tableView registerClass:[SearchTicketTableViewCell class] forCellReuseIdentifier:SearchTicketCellReuseIdentifier];
     [self.view addSubview:_tableView];
     
+    //для избранного
     if (isFavorites) {
         _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"From Search", @"From Price Map"]];
         [_segmentedControl addTarget:self action:@selector(changeSource) forControlEvents:UIControlEventValueChanged];
@@ -125,16 +126,76 @@
         self.navigationItem.titleView = _segmentedControl;
         _segmentedControl.selectedSegmentIndex = 0;
         [self changeSource];
+        //меню сортировки
+        _optionsBarItem = [[UIBarButtonItem alloc] init];
+        _optionsBarItem.menu = [self generateSortMenu];
+        _optionsBarItem.image = [UIImage systemImageNamed:@"arrow.up.arrow.down"];
+        _optionsBarItem.tintColor = [UIColor labelColor];
+        self.navigationItem.rightBarButtonItem = _optionsBarItem;
     }
+}
+
+//генерация меню сортировки
+- (UIMenu *)generateSortMenu {
+    UIImage *priceImage;
+    UIImage *dateImage;
+    UIImage *sourceImage  = [UIImage imageNamed:@"descending-sort.png"];
+    //установка стрелки напрвления
+    switch (self->_favoriteSortType) {
+        case FavoriteSortTypeAscPrice:
+            priceImage = sourceImage;
+            dateImage = nil;
+            break;
+        case FavoriteSortTypeAscDate:
+            priceImage = nil;
+            dateImage = sourceImage;
+            break;
+        case FavoriteSortTypeDescPrice:
+            priceImage = [UIImage imageWithCGImage:sourceImage.CGImage
+                                             scale:sourceImage.scale
+                                       orientation:UIImageOrientationDown];
+            dateImage = nil;
+            break;
+        case FavoriteSortTypeDescDate:
+            priceImage = nil;
+            dateImage = [UIImage imageWithCGImage:sourceImage.CGImage
+                                            scale:sourceImage.scale
+                                      orientation:UIImageOrientationDown];
+            break;
+    }
+    
+    //сортировка
+    void (^menuHandler)(UIAction *) = ^(__kindof UIAction * _Nonnull action){
+        if ([action.identifier  isEqual: SORT_BY_PRICE]) {
+            if (self->_favoriteSortType == FavoriteSortTypeDescPrice)
+                self->_favoriteSortType = FavoriteSortTypeAscPrice;
+            else
+                self->_favoriteSortType = FavoriteSortTypeDescPrice;
+            
+        }
+        else if ([action.identifier  isEqual: SORT_BY_DATE]) {
+                if (self->_favoriteSortType == FavoriteSortTypeDescDate)
+                    self->_favoriteSortType = FavoriteSortTypeAscDate;
+                else
+                    self->_favoriteSortType = FavoriteSortTypeDescDate;
+            }
+        [self changeSource];
+        self->_optionsBarItem.menu = [self generateSortMenu];
+    };
+    
+    return [UIMenu menuWithChildren:@[
+        [UIAction actionWithTitle:@"Price" image:priceImage identifier:SORT_BY_PRICE handler:menuHandler],
+        [UIAction actionWithTitle:@"Date" image:dateImage identifier:SORT_BY_DATE handler:menuHandler ],
+    ]];
 }
 
 - (void)changeSource {
     switch (_segmentedControl.selectedSegmentIndex) {
         case 0:
-            _tickets = [[CoreDataHelper sharedInstance] favorites:FavoriteSourceSearch];
+            _tickets = [[CoreDataHelper sharedInstance] favorites:FavoriteSourceSearch sort:_favoriteSortType];
             break;
         case 1:
-            _tickets = [[CoreDataHelper sharedInstance] favorites:FavoriteSourcePriceMap];
+            _tickets = [[CoreDataHelper sharedInstance] favorites:FavoriteSourcePriceMap sort:_favoriteSortType];
             break;
         default:
             break;
