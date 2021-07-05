@@ -13,7 +13,6 @@
 		151E561A269225DC005D7D05 /* CoreDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 151E5619269225DC005D7D05 /* CoreDataHelper.m */; };
 		151E5624269273B2005D7D05 /* FavoriteTicketMO+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 151E5622269273B2005D7D05 /* FavoriteTicketMO+CoreDataClass.m */; };
 		151E5625269273B2005D7D05 /* FavoriteTicketMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 151E5623269273B2005D7D05 /* FavoriteTicketMO+CoreDataProperties.m */; };
-		151E562A2692BC64005D7D05 /* PriceMapTicketTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 151E56292692BC64005D7D05 /* PriceMapTicketTableViewCell.m */; };
 		151E563B2692C6D7005D7D05 /* CustomPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 151E563A2692C6D7005D7D05 /* CustomPointAnnotation.m */; };
 		151E56422692C9DC005D7D05 /* AnnotationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 151E56412692C9DC005D7D05 /* AnnotationButton.m */; };
 		157EE81E267CCD6D000750A0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 157EE81D267CCD6D000750A0 /* AppDelegate.m */; };
@@ -50,8 +49,6 @@
 		151E5621269273B2005D7D05 /* FavoriteTicketMO+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FavoriteTicketMO+CoreDataClass.h"; sourceTree = "<group>"; };
 		151E5622269273B2005D7D05 /* FavoriteTicketMO+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "FavoriteTicketMO+CoreDataClass.m"; sourceTree = "<group>"; };
 		151E5623269273B2005D7D05 /* FavoriteTicketMO+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "FavoriteTicketMO+CoreDataProperties.m"; sourceTree = "<group>"; };
-		151E56282692BC64005D7D05 /* PriceMapTicketTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PriceMapTicketTableViewCell.h; sourceTree = "<group>"; };
-		151E56292692BC64005D7D05 /* PriceMapTicketTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PriceMapTicketTableViewCell.m; sourceTree = "<group>"; };
 		151E56392692C6D7005D7D05 /* CustomPointAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomPointAnnotation.h; sourceTree = "<group>"; };
 		151E563A2692C6D7005D7D05 /* CustomPointAnnotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomPointAnnotation.m; sourceTree = "<group>"; };
 		151E56402692C9DC005D7D05 /* AnnotationButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnnotationButton.h; sourceTree = "<group>"; };
@@ -236,8 +233,6 @@
 		1583FBA82684DDE50077B65B /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				151E56282692BC64005D7D05 /* PriceMapTicketTableViewCell.h */,
-				151E56292692BC64005D7D05 /* PriceMapTicketTableViewCell.m */,
 				1583FBA42684DDDA0077B65B /* SearchTicketTableViewCell.h */,
 				1583FBA52684DDDA0077B65B /* SearchTicketTableViewCell.m */,
 				151E56402692C9DC005D7D05 /* AnnotationButton.h */,
@@ -337,7 +332,6 @@
 				157EE821267CCD6D000750A0 /* SceneDelegate.m in Sources */,
 				157EE83A267CD017000750A0 /* MainViewController.m in Sources */,
 				157EE8612681DB43000750A0 /* City.m in Sources */,
-				151E562A2692BC64005D7D05 /* PriceMapTicketTableViewCell.m in Sources */,
 				151E560E26922035005D7D05 /* DataModel.xcdatamodeld in Sources */,
 				1583FB9E268497DF0077B65B /* APIManager.m in Sources */,
 				1583FBA22684D6BB0077B65B /* Ticket.m in Sources */,

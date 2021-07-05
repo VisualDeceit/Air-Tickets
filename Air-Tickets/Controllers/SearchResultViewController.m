@@ -116,7 +116,6 @@
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_tableView registerClass:[SearchTicketTableViewCell class] forCellReuseIdentifier:SearchTicketCellReuseIdentifier];
-    [_tableView registerClass:[PriceMapTicketTableViewCell class] forCellReuseIdentifier:PriceMapCellReuseIdentifier];
     [self.view addSubview:_tableView];
     
     if (isFavorites) {

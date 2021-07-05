@@ -93,8 +93,13 @@
 }
 
 - (void)addToFavoritesButtonDidTap:(AnnotationButton *)button {
-    NSLog(@"%@", [button.annotation.ticket description]);
-    [[CoreDataHelper sharedInstance] addToFavorite:button.annotation.ticket from:FavoriteSourcePriceMap];
+    if ([[CoreDataHelper sharedInstance] isFavorite:button.annotation.ticket]) {
+        [button setImage:[UIImage systemImageNamed:@"star"] forState:UIControlStateNormal];
+        [[CoreDataHelper sharedInstance] removeFromFavorite:button.annotation.ticket];
+    } else {
+        [button setImage:[UIImage systemImageNamed:@"star.fill"] forState:UIControlStateNormal];
+        [[CoreDataHelper sharedInstance] addToFavorite:button.annotation.ticket from:FavoriteSourcePriceMap];
+    }
 }
 
 @end

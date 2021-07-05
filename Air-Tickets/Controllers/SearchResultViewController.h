@@ -7,11 +7,9 @@
 
 #import <UIKit/UIKit.h>
 #import "SearchTicketTableViewCell.h"
-#import "PriceMapTicketTableViewCell.h"
 #import "CoreDataHelper.h"
 
 #define SearchTicketCellReuseIdentifier @"SearchCellIdentifier"
-#define PriceMapCellReuseIdentifier @"PriceMapCellIdentifier"
 
 NS_ASSUME_NONNULL_BEGIN
 
