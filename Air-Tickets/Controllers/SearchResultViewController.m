@@ -49,23 +49,9 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    if (isFavorites) {
-        self.navigationController.navigationBar.prefersLargeTitles = YES;
-        if (_segmentedControl.selectedSegmentIndex == 0) {
-            _tickets = [[CoreDataHelper sharedInstance] favorites:FavoriteSourceSearch];
-        }
-        else if (_segmentedControl.selectedSegmentIndex == 1) {
-            _tickets = [[CoreDataHelper sharedInstance] favorites:FavoriteSourcePriceMap];
-        }
-        [self.tableView reloadData];
-        
-        _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"From Search", @"From Price Map"]];
-        [_segmentedControl addTarget:self action:@selector(changeSource) forControlEvents:UIControlEventValueChanged];
-        _segmentedControl.tintColor = [UIColor blackColor];
 
-        self.navigationItem.titleView = _segmentedControl;
-        _segmentedControl.selectedSegmentIndex = 0;
+    if (isFavorites) {
+        [self changeSource];
     }
 }
 
@@ -123,6 +109,7 @@
 //MARK: - Private
 - (void)configureUI {
     [self.view setBackgroundColor:[UIColor systemBackgroundColor]];
+    self.navigationController.navigationBar.prefersLargeTitles = YES;
     
     _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     _tableView.delegate = self;
@@ -131,6 +118,15 @@
     [_tableView registerClass:[SearchTicketTableViewCell class] forCellReuseIdentifier:SearchTicketCellReuseIdentifier];
     [_tableView registerClass:[PriceMapTicketTableViewCell class] forCellReuseIdentifier:PriceMapCellReuseIdentifier];
     [self.view addSubview:_tableView];
+    
+    if (isFavorites) {
+        _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"From Search", @"From Price Map"]];
+        [_segmentedControl addTarget:self action:@selector(changeSource) forControlEvents:UIControlEventValueChanged];
+        _segmentedControl.tintColor = [UIColor blackColor];
+        self.navigationItem.titleView = _segmentedControl;
+        _segmentedControl.selectedSegmentIndex = 0;
+        [self changeSource];
+    }
 }
 
 - (void)changeSource {

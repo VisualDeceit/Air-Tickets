@@ -93,7 +93,8 @@
 }
 
 - (void)addToFavoritesButtonDidTap:(AnnotationButton *)button {
-    NSLog(@"%@", button.annotation.ticket.price);
+    NSLog(@"%@", [button.annotation.ticket description]);
+    [[CoreDataHelper sharedInstance] addToFavorite:button.annotation.ticket from:FavoriteSourcePriceMap];
 }
 
 @end
