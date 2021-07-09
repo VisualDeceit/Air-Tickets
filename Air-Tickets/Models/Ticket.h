@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MapPrice.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *to;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithPrice:(MapPrice *)price;
 
 @end
 

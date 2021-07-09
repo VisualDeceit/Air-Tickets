@@ -12,10 +12,13 @@
 #import "DataManager.h"
 #import "MapPrice.h"
 #import <CoreLocation/CoreLocation.h>
+#import "PriceMapAnnotation.h"
+#import "AnnotationButton.h"
+#import "CoreDataHelper.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MapPriceViewController : UIViewController
+@interface MapPriceViewController : UIViewController <MKMapViewDelegate>
 
 @end
 
