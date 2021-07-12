@@ -49,9 +49,11 @@
         UIBarButtonItem *cancelBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonDidTap)];
         keyboardToolbar.items = @[doneBarButton, flexBarButton, cancelBarButton];
 
-        
         _dateTextField.inputAccessoryView = keyboardToolbar;
         [self.view addSubview:_dateTextField];
+        
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        center.delegate = self;
     }
     return self;
 }
@@ -273,6 +275,22 @@
 - (void)cancelButtonDidTap {
     notificationCell = nil;
     [self.view endEditing:YES];
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler {
+    
+}
+
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.alpha = 0;
+    cell.contentView.layer.transform = CATransform3DMakeScale(0.5, 0.5, 0.5);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.250 animations:^{
+            cell.alpha = 1;
+            cell.contentView.layer.transform = CATransform3DScale(CATransform3DIdentity, 1, 1, 1);
+        }];
+    });
 }
 
 @end
