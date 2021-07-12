@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NotificationCenter.h"
 
 @interface SceneDelegate : UIResponder <UIWindowSceneDelegate>
 

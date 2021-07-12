@@ -16,8 +16,7 @@
 
 @implementation LocationService
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         _locationManager = [CLLocationManager new];

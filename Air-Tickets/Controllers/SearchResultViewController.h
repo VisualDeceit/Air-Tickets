@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 #import "SearchTicketTableViewCell.h"
 #import "CoreDataHelper.h"
+#import "NotificationCenter.h"
 
 #define SearchTicketCellReuseIdentifier @"SearchCellIdentifier"
 

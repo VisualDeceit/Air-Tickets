@@ -15,6 +15,7 @@
 		151E5625269273B2005D7D05 /* FavoriteTicketMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 151E5623269273B2005D7D05 /* FavoriteTicketMO+CoreDataProperties.m */; };
 		151E563B2692C6D7005D7D05 /* PriceMapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 151E563A2692C6D7005D7D05 /* PriceMapAnnotation.m */; };
 		151E56422692C9DC005D7D05 /* AnnotationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 151E56412692C9DC005D7D05 /* AnnotationButton.m */; };
+		151E564D26982028005D7D05 /* NotificationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 151E564C26982027005D7D05 /* NotificationCenter.m */; };
 		157EE81E267CCD6D000750A0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 157EE81D267CCD6D000750A0 /* AppDelegate.m */; };
 		157EE821267CCD6D000750A0 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 157EE820267CCD6D000750A0 /* SceneDelegate.m */; };
 		157EE829267CCD71000750A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 157EE828267CCD71000750A0 /* Assets.xcassets */; };
@@ -53,6 +54,8 @@
 		151E563A2692C6D7005D7D05 /* PriceMapAnnotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PriceMapAnnotation.m; sourceTree = "<group>"; };
 		151E56402692C9DC005D7D05 /* AnnotationButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnnotationButton.h; sourceTree = "<group>"; };
 		151E56412692C9DC005D7D05 /* AnnotationButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnnotationButton.m; sourceTree = "<group>"; };
+		151E564B26982027005D7D05 /* NotificationCenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationCenter.h; sourceTree = "<group>"; };
+		151E564C26982027005D7D05 /* NotificationCenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationCenter.m; sourceTree = "<group>"; };
 		157EE819267CCD6D000750A0 /* Air-Tickets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Air-Tickets.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		157EE81C267CCD6D000750A0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		157EE81D267CCD6D000750A0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -195,6 +198,8 @@
 			children = (
 				157EE8502681CA4B000750A0 /* DataManager.h */,
 				157EE8512681CA4B000750A0 /* DataManager.m */,
+				151E564B26982027005D7D05 /* NotificationCenter.h */,
+				151E564C26982027005D7D05 /* NotificationCenter.m */,
 				1583FB9C268497DF0077B65B /* APIManager.h */,
 				1583FB9D268497DF0077B65B /* APIManager.m */,
 				15A444B6268B453E006A1154 /* LocationService.h */,
@@ -335,6 +340,7 @@
 				151E560E26922035005D7D05 /* DataModel.xcdatamodeld in Sources */,
 				1583FB9E268497DF0077B65B /* APIManager.m in Sources */,
 				1583FBA22684D6BB0077B65B /* Ticket.m in Sources */,
+				151E564D26982028005D7D05 /* NotificationCenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SearchTicketTableViewCell : UITableViewCell
 
+@property (nonatomic, strong) UIImageView *airlineLogoView;
 @property (nonatomic, strong) Ticket *ticket;
 @property (nonatomic, strong) FavoriteTicketMO *favoriteTicket;
 @property (nonatomic) BOOL showFavoriteSign;
