@@ -53,8 +53,8 @@
 }
 
 - (void)createContentDataArray {
-    NSArray *titles = [NSArray arrayWithObjects:@"О ПРИЛОЖЕНИИ", @"АВИАБИЛЕТЫ", @"КАРТА ЦЕН", @"ИЗБРАННОЕ", nil];
-    NSArray *contents = [NSArray arrayWithObjects:@"Приложение для поиска авиабилетов", @"Находите самые дешевые авиабилеты", @"Просматривайте карту цен", @"Сохраняйте выбранные билеты в избранное", nil];
+    NSArray *titles = [NSArray arrayWithObjects:@"ABOUT", @"FLIGHTS", @"PRICE MAP", @"FAVORITES", nil];
+    NSArray *contents = [NSArray arrayWithObjects:@"Flight search application", @"Find the cheapest flights", @"Browse the price map", @"Save selected tickets to favorites", nil];
     for (int i = 0; i < 4; ++i) {
         contentData[i].title = [titles objectAtIndex:i];
         contentData[i].contentText = [contents objectAtIndex:i];
