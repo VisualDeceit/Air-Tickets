@@ -16,6 +16,8 @@
 		151E563B2692C6D7005D7D05 /* PriceMapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 151E563A2692C6D7005D7D05 /* PriceMapAnnotation.m */; };
 		151E56422692C9DC005D7D05 /* AnnotationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 151E56412692C9DC005D7D05 /* AnnotationButton.m */; };
 		151E564D26982028005D7D05 /* NotificationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 151E564C26982027005D7D05 /* NotificationCenter.m */; };
+		151E5652269CE86D005D7D05 /* WalkthroughViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 151E5651269CE86C005D7D05 /* WalkthroughViewController.m */; };
+		151E5656269CE9AB005D7D05 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 151E5655269CE9AB005D7D05 /* FirstViewController.m */; };
 		157EE81E267CCD6D000750A0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 157EE81D267CCD6D000750A0 /* AppDelegate.m */; };
 		157EE821267CCD6D000750A0 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 157EE820267CCD6D000750A0 /* SceneDelegate.m */; };
 		157EE829267CCD71000750A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 157EE828267CCD71000750A0 /* Assets.xcassets */; };
@@ -56,6 +58,10 @@
 		151E56412692C9DC005D7D05 /* AnnotationButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnnotationButton.m; sourceTree = "<group>"; };
 		151E564B26982027005D7D05 /* NotificationCenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationCenter.h; sourceTree = "<group>"; };
 		151E564C26982027005D7D05 /* NotificationCenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationCenter.m; sourceTree = "<group>"; };
+		151E5650269CE86C005D7D05 /* WalkthroughViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WalkthroughViewController.h; sourceTree = "<group>"; };
+		151E5651269CE86C005D7D05 /* WalkthroughViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WalkthroughViewController.m; sourceTree = "<group>"; };
+		151E5654269CE9AB005D7D05 /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
+		151E5655269CE9AB005D7D05 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 		157EE819267CCD6D000750A0 /* Air-Tickets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Air-Tickets.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		157EE81C267CCD6D000750A0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		157EE81D267CCD6D000750A0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -120,6 +126,10 @@
 				157EE84D2681C801000750A0 /* PlaceViewController.m */,
 				151E5605268DBEFA005D7D05 /* CustomTabBarController.h */,
 				151E5606268DBEFA005D7D05 /* CustomTabBarController.m */,
+				151E5650269CE86C005D7D05 /* WalkthroughViewController.h */,
+				151E5651269CE86C005D7D05 /* WalkthroughViewController.m */,
+				151E5654269CE9AB005D7D05 /* FirstViewController.h */,
+				151E5655269CE9AB005D7D05 /* FirstViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -324,12 +334,14 @@
 				151E56422692C9DC005D7D05 /* AnnotationButton.m in Sources */,
 				157EE8652681DB52000750A0 /* Airport.m in Sources */,
 				151E55F7268B49C4005D7D05 /* MapPriceViewController.m in Sources */,
+				151E5656269CE9AB005D7D05 /* FirstViewController.m in Sources */,
 				157EE84E2681C801000750A0 /* PlaceViewController.m in Sources */,
 				151E561A269225DC005D7D05 /* CoreDataHelper.m in Sources */,
 				151E5625269273B2005D7D05 /* FavoriteTicketMO+CoreDataProperties.m in Sources */,
 				1583FBA62684DDDA0077B65B /* SearchTicketTableViewCell.m in Sources */,
 				157EE81E267CCD6D000750A0 /* AppDelegate.m in Sources */,
 				157EE8522681CA4B000750A0 /* DataManager.m in Sources */,
+				151E5652269CE86D005D7D05 /* WalkthroughViewController.m in Sources */,
 				151E5607268DBEFA005D7D05 /* CustomTabBarController.m in Sources */,
 				15A444B4268AF494006A1154 /* MapPrice.m in Sources */,
 				157EE82F267CCD71000750A0 /* main.m in Sources */,

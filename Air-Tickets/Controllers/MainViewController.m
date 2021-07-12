@@ -41,6 +41,11 @@
     [DataManager.sharedInstance loadData];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self presentFirstViewControllerIfNeeded];
+}
+
 - (void) configureUI {
     [self.view setBackgroundColor:[UIColor systemBackgroundColor]];
     self.navigationController.navigationBar.prefersLargeTitles = YES;
@@ -217,5 +222,14 @@
 - (void)selectPlace:(nonnull id)place withType:(PlaceType)placeType andDataType:(DataSourceType)dataType {
    // [self setPlace:place withType:placeType andDataType:dataType];
 }
+
+- (void)presentFirstViewControllerIfNeeded {
+    BOOL isFirstStart = [[NSUserDefaults standardUserDefaults] boolForKey:@"first_start"];
+    if (!isFirstStart) {
+        FirstViewController *firstViewController = [[FirstViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
+        [self presentViewController:firstViewController animated:YES completion:nil];
+    }
+}
+
 
 @end
