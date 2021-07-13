@@ -22,6 +22,8 @@
     self.window = [[UIWindow alloc]initWithFrame:windowFrame];
     [self.window makeKeyAndVisible];
     
+    [[NotificationCenter sharedInstance]registerService];
+    
     //tabBarController
     CustomTabBarController *tabBarController = [[CustomTabBarController alloc] init];
     

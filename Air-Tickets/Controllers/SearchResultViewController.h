@@ -8,12 +8,13 @@
 #import <UIKit/UIKit.h>
 #import "SearchTicketTableViewCell.h"
 #import "CoreDataHelper.h"
+#import "NotificationCenter.h"
 
 #define SearchTicketCellReuseIdentifier @"SearchCellIdentifier"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SearchResultViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface SearchResultViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UNUserNotificationCenterDelegate>
 
 - (instancetype)initWithTickets:(NSArray *)tickets;
 - (instancetype)initForFavoriteTickets;

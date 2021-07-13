@@ -18,7 +18,7 @@
 @implementation DataManager
 
 // Singletone init
-+ (instancetype) sharedInstance {
++ (instancetype)sharedInstance {
     static DataManager *instance;
     static dispatch_once_t onceToken;
      dispatch_once(&onceToken, ^{

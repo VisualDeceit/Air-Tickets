@@ -14,11 +14,15 @@
 @property (nonatomic, strong) UISegmentedControl *segmentedControl;
 @property (nonatomic, strong) UIBarButtonItem *optionsBarItem;
 @property (nonatomic) FavoriteSortType favoriteSortType;
+@property (nonatomic, strong) UIDatePicker *datePicker;
+@property (nonatomic, strong) UITextField *dateTextField;
 
 @end
 
 @implementation SearchResultViewController {
     BOOL isFavorites;
+    SearchTicketTableViewCell *notificationCell;
+
 }
 
 - (instancetype)initWithTickets:(NSArray *)tickets {
@@ -28,6 +32,28 @@
         isFavorites = NO;
         _tickets = tickets;
         self.title = @"Tickets";
+        
+        _datePicker = [[UIDatePicker alloc] init];
+        _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+        _datePicker.minimumDate = [NSDate date];
+        [_datePicker setPreferredDatePickerStyle: UIDatePickerStyleWheels];
+        
+        _dateTextField = [[UITextField alloc] initWithFrame:self.view.bounds];
+        _dateTextField.hidden = YES;
+        _dateTextField.inputView = _datePicker;
+        
+        UIToolbar *keyboardToolbar = [[UIToolbar alloc] init];
+        [keyboardToolbar sizeToFit];
+        UIBarButtonItem *flexBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        UIBarButtonItem *doneBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonDidTap:)];
+        UIBarButtonItem *cancelBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonDidTap)];
+        keyboardToolbar.items = @[doneBarButton, flexBarButton, cancelBarButton];
+
+        _dateTextField.inputAccessoryView = keyboardToolbar;
+        [self.view addSubview:_dateTextField];
+        
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        center.delegate = self;
     }
     return self;
 }
@@ -100,8 +126,15 @@
         }];
     }
     
+    UIAlertAction *notificationAction = [UIAlertAction actionWithTitle:@"Set reminder" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        self->notificationCell = [tableView cellForRowAtIndexPath:indexPath];
+        [self->_dateTextField becomeFirstResponder];
+    }];
+
+    
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil];
     [alertController addAction:favoriteAction];
+    [alertController addAction:notificationAction];
     [alertController addAction:cancelAction];
     [self presentViewController:alertController animated:YES completion:nil];
 }
@@ -120,7 +153,7 @@
     
     //для избранного
     if (isFavorites) {
-        _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"From Search", @"From Price Map"]];
+        _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Search", @"Price Map"]];
         [_segmentedControl addTarget:self action:@selector(changeSource) forControlEvents:UIControlEventValueChanged];
         _segmentedControl.tintColor = [UIColor blackColor];
         self.navigationItem.titleView = _segmentedControl;
@@ -201,6 +234,63 @@
             break;
     }
     [_tableView reloadData];
+}
+
+- (void)doneButtonDidTap:(UIBarButtonItem *)sender {
+    if (_datePicker.date && notificationCell) {
+        NSString *message = [NSString stringWithFormat:@"%@ - %@ за %@ руб.", notificationCell.ticket.from, notificationCell.ticket.to, notificationCell.ticket.price];
+
+        NSURL *imageURL;
+        if (notificationCell.airlineLogoView.image) {
+            NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingString:[NSString stringWithFormat:@"/%@.png", notificationCell.ticket.airline]];
+            if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+                UIImage *logo = notificationCell.airlineLogoView.image;
+                NSData *pngData = UIImagePNGRepresentation(logo);
+                [pngData writeToFile:path atomically:YES];
+
+            }
+            imageURL = [NSURL fileURLWithPath:path];
+        }
+        
+        Notification notification = NotificationMake(@"Ticket reminder", message, _datePicker.date, imageURL);
+        [[NotificationCenter sharedInstance] sendNotification:notification];
+
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
+        [dateFormat setDateFormat: @"dd MMMM yyyy HH:mm"];
+        [dateFormat setLocale: [NSLocale localeWithLocaleIdentifier:@"EN_en"]];
+        NSString *stringDate = [dateFormat stringFromDate:_datePicker.date];
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Successfully" message:[NSString stringWithFormat:@"Notification will be sent - %@", stringDate] preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:cancelAction];
+        
+        _datePicker.date = [NSDate date];
+        notificationCell = nil;
+        [self.view endEditing:YES];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+}
+
+- (void)cancelButtonDidTap {
+    notificationCell = nil;
+    [self.view endEditing:YES];
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler {
+    
+}
+
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.alpha = 0;
+    cell.contentView.layer.transform = CATransform3DMakeScale(0.5, 0.5, 0.5);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.250 animations:^{
+            cell.alpha = 1;
+            cell.contentView.layer.transform = CATransform3DScale(CATransform3DIdentity, 1, 1, 1);
+        }];
+    });
 }
 
 @end
