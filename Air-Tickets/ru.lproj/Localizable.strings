@@ -1,0 +1,69 @@
+/* 
+  Localizable.strings
+  Air-Tickets
+
+  Created by Alexander Fomin on 14.07.2021.
+  
+*/
+
+// TabBarController
+
+"search_tab" = "Поиск";
+"map_tab" = "Карта цен";
+"favorites_tab" = "Избранное";
+
+// MainViewController
+
+"departure" = "Оправление";
+"destination" = "Назначение";
+"main_search" = "Найти";
+"search_placeholder" = "Введите название аэропорта или города...";
+"select" = "Выбрать";
+
+//PlaceViewController
+
+"cities_tab" = "Города";
+"airports_tab" = "Аэропорты";
+"place_city_placeholder" = "Найти город %@...";
+"place_aitport_placeholder" = "Найти аэропорт %@...";
+"place_dep" = "отправления";
+"place_des" = "назначения";
+
+// FirstViewController
+
+"about_app_header" = "О ПРИЛОЖЕНИИ";
+"tickets_header" = "АВИАБИЛЕТЫ";
+"map_price_header" = "КАРТА ЦЕН";
+"favorites_header" = "ИЗБРАННОЕ";
+
+"about_app_describe" = "Приложение для поиска авиабилетов";
+"tickets_describe" = "Находите самые дешевые авиабилеты";
+"map_price_describe" = "Просматривайте карту цен";
+"favorites_describe" = "Сохраняйте выбранные билеты в избранное";
+
+"next_button" = "ДАЛЕЕ";
+"done_button" = "ГОТОВО";
+
+
+// SearchResultViewController
+
+"tickets_title" = "Билеты";
+"add_to_favorite" = "Добавить в избранное";
+"remove_from_favorite" = "Удалить из избранного";
+"remind_me" = "Напомнить";
+"ticket_reminder" = "Напоминание о билете";
+"notification_will_be_sent" = "Уведомление будет отправлено - %@";
+"success" = "Готово";
+"price" = "Цена";
+"date" = "Дата";
+
+// Alerts
+
+"close" = "Закрыть";
+"error" = "Ошибка";
+"sorry" = "Извините";
+"not_summary" = "%@ - %@ за %@ РУБ";
+"enter_all_data" = "Введите все исходные данные для запроса";
+"tickets_not_found" = "По данному направлению билетов не найдено";
+"actions_with_tickets" = "Действия с билетом";
+"actions_with_tickets_describe" = "Что необходимо сделать с выбранным билетом?";

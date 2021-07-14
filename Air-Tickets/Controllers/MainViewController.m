@@ -49,14 +49,14 @@
 - (void) configureUI {
     [self.view setBackgroundColor:[UIColor systemBackgroundColor]];
     self.navigationController.navigationBar.prefersLargeTitles = YES;
-    self.title = @"Search tickets";
+    self.title = NSLocalizedString(@"search_tab", "");
 
     CGRect departureLabelFrame = CGRectMake(X_PADDING, 114.0, SCREEN_WIDTH - X_PADDING, 25.0);
     self.departureLabel = [[UILabel alloc] initWithFrame: departureLabelFrame];
     self.departureLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightBold];
     self.departureLabel.textColor = [UIColor labelColor];
     self.departureLabel.textAlignment = NSTextAlignmentLeft;
-    self.departureLabel.text = @"Departure";
+    self.departureLabel.text = NSLocalizedString(@"departure", "");
     [self.view addSubview: self.departureLabel];
     
     CGFloat offset = self.departureLabel.frame.origin.y + self.departureLabel.frame.size.height + Y_PADDING;
@@ -64,13 +64,13 @@
     CGRect departureFrame = CGRectMake(X_PADDING, offset, TEXT_FIELD_WIDTH, 44.0);
     self.departureTextField = [[UITextField alloc] initWithFrame:departureFrame];
     self.departureTextField.borderStyle = UITextBorderStyleRoundedRect;
-    self.departureTextField.placeholder = @"Enter airport or city name...";
+    self.departureTextField.placeholder = NSLocalizedString(@"search_placeholder", "");
     self.departureTextField.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightLight];
     [self.view addSubview: self.departureTextField];
     
     CGRect departureButtonFrame = CGRectMake(TEXT_FIELD_WIDTH + X_PADDING * 2.0, offset, SELECT_BUTTTON_WIDTH, 44.0);
     self.departureButton = [UIButton buttonWithType: UIButtonTypeSystem];
-    [self.departureButton setTitle:@"Select" forState:UIControlStateNormal];
+    [self.departureButton setTitle:NSLocalizedString(@"select", "") forState:UIControlStateNormal];
     self.departureButton.backgroundColor = [UIColor systemGray2Color];
     self.departureButton.tintColor = [UIColor whiteColor];
     self.departureButton.frame = departureButtonFrame;
@@ -85,7 +85,7 @@
     self.destinationLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightBold];
     self.destinationLabel.textColor = [UIColor labelColor];
     self.destinationLabel.textAlignment = NSTextAlignmentLeft;
-    self.destinationLabel.text = @"Destination";
+    self.destinationLabel.text = NSLocalizedString(@"destination", "");
     [self.view addSubview: self.destinationLabel];
     
     offset = self.destinationLabel.frame.origin.y + self.destinationLabel.frame.size.height + Y_PADDING;
@@ -93,13 +93,13 @@
     CGRect destinationFrame = CGRectMake(X_PADDING, offset, TEXT_FIELD_WIDTH, 44.0);
     self.destinationTextField = [[UITextField alloc] initWithFrame:destinationFrame];
     self.destinationTextField.borderStyle = UITextBorderStyleRoundedRect;
-    self.destinationTextField.placeholder = @"Enter airport or city name...";
+    self.destinationTextField.placeholder = NSLocalizedString(@"search_placeholder", "");
     self.destinationTextField.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightLight];
     [self.view addSubview: self.destinationTextField];
     
     CGRect destinationButtonFrame = CGRectMake(TEXT_FIELD_WIDTH + X_PADDING * 2.0, offset, SELECT_BUTTTON_WIDTH, 44.0);
     self.destinationButton = [UIButton buttonWithType: UIButtonTypeSystem];
-    [self.destinationButton setTitle:@"Select" forState:UIControlStateNormal];
+    [self.destinationButton setTitle:NSLocalizedString(@"select", "") forState:UIControlStateNormal];
     self.destinationButton.backgroundColor = [UIColor systemGray2Color];
     self.destinationButton.tintColor = [UIColor whiteColor];
     self.destinationButton.frame = destinationButtonFrame;
@@ -111,7 +111,7 @@
     
     CGRect searchButtonFrame = CGRectMake(X_PADDING, offset, SCREEN_WIDTH - X_PADDING * 2.0, 44.0);
     _searchButton = [UIButton buttonWithType: UIButtonTypeSystem];
-    [_searchButton setTitle:@"Search tickets" forState:UIControlStateNormal];
+    [_searchButton setTitle:NSLocalizedString(@"main_search", "") forState:UIControlStateNormal];
     _searchButton.backgroundColor = [UIColor systemGray2Color];
     _searchButton.tintColor = [UIColor whiteColor];
     _searchButton.frame = searchButtonFrame;
@@ -137,8 +137,8 @@
 // Search tickets
 - (void)searchButtonDidTap:(UIButton *)sender {
     if ((!_searchRequest.origin) || (!_searchRequest.destionation)) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error!" message:@"Enter all initial data for the request" preferredStyle: UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:@"Close" style:(UIAlertActionStyleDefault) handler:nil]];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"error", "") message:NSLocalizedString(@"enter_all_data", "") preferredStyle: UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"close", "") style:(UIAlertActionStyleDefault) handler:nil]];
         [self presentViewController:alertController animated:YES completion:nil];
         return;
     }
@@ -146,11 +146,11 @@
     [[APIManager sharedInstance] ticketsWithRequest:_searchRequest withCompletion:^(NSArray * _Nonnull tickets) {
         if (tickets.count > 0) {
             SearchResultViewController *searchResultViewController = [[SearchResultViewController alloc] initWithTickets:tickets];
-            searchResultViewController.title = @"Tickets";
+            searchResultViewController.title = NSLocalizedString(@"tickets_title", "");
             [self.navigationController pushViewController:searchResultViewController animated:YES];
         } else {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Sorry!" message:@"No tickets found for this direction" preferredStyle: UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:@"Close" style:(UIAlertActionStyleDefault) handler:nil]];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"sorry", "") message:NSLocalizedString(@"tickets_not_found", "") preferredStyle: UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"close", "") style:(UIAlertActionStyleDefault) handler:nil]];
             [self presentViewController:alertController animated:YES completion:nil];
         }
     }];

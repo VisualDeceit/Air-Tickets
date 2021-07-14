@@ -1,0 +1,67 @@
+/* 
+  Localizable.strings
+  Air-Tickets
+
+  Created by Alexander Fomin on 14.07.2021.
+  
+*/
+// TabBarController
+
+"search_tab" = "Search";
+"map_tab" = "Price Map";
+"favorites_tab" = "Favorites";
+
+// MainViewController
+
+"departure" = "Departure";
+"destination" = "Destination";
+"main_search" = "Search";
+"search_placeholder" = "Enter airport or city name...";
+"select" = "Select" ;
+
+//PlaceViewController
+
+"cities_tab" = "Cities";
+"airports_tab" = "Airports";
+"place_city_placeholder" = "Search %@ city...";
+"place_aitport_placeholder" = "Search %@ airport...";
+"place_dep" = "departure";
+"place_des" = "destination";
+
+// FirstViewController
+
+"about_app_header" = "ABOUT";
+"tickets_header" = "FLIGHTS";
+"map_price_header" = "PRICE MAP";
+"favorites_header" = "FAVORITES";
+
+"about_app_describe" = "Flight search application";
+"tickets_describe" = "Find the cheapest flights";
+"map_price_describe" = "Browse the price map";
+"favorites_describe" = "Save selected tickets to favorites";
+
+"next_button" = "NEXT";
+"done_button" = "READY";
+
+// SearchResultViewController
+
+"tickets_title" = "Tickets";
+"add_to_favorite" = "Add to favourites";
+"remove_from_favorite" = "Remove from favorites";
+"remind_me" = "Set reminder";
+"ticket_reminder" = "Ticket reminder";
+"notification_will_be_sent" = "Notification will be sent - %@";
+"success" = "Successfully";
+"price" = "Price";
+"date" = "Date";
+
+// Alerts
+
+"close" = "Close";
+"error" = "Error";
+"sorry" = "Sorry";
+"not_summary" = "%@ - %@ for %@ RUB";
+"enter_all_data" = "Enter all initial data for the request";
+"tickets_not_found" = "No tickets found for this direction";
+"actions_with_tickets" = "Action with ticket";
+"actions_with_tickets_describe" = "What should be done with the selected ticket?";
