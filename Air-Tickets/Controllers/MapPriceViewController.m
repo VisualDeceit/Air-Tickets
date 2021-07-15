@@ -26,7 +26,7 @@
 }
 
 - (void)configureUI {
-    self.title = @"Price map";
+    self.title = NSLocalizedString(@"map_tab", "");
     self.navigationController.navigationBar.prefersLargeTitles = YES;
 }
 

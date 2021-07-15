@@ -74,7 +74,7 @@
            _tableView.tableHeaderView = _searchController.searchBar;
        }
 
-    _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Cities", @"Airports"]];
+    _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[NSLocalizedString(@"cities_tab", ""), NSLocalizedString(@"airports_tab", "")]];
     [_segmentedControl addTarget:self action:@selector(changeSource) forControlEvents:UIControlEventValueChanged];
     _segmentedControl.tintColor = [UIColor blackColor];
 
@@ -83,9 +83,9 @@
     [self changeSource];
 
     if (_placeType == PlaceTypeDeparture) {
-        self.title = @"Departure";
+        self.title = NSLocalizedString(@"departure", "");
     } else {
-        self.title = @"Destination";
+        self.title = NSLocalizedString(@"destination", "");
     }
 }
 
@@ -109,16 +109,16 @@
 - (void)setSearchBarPlaceholderText {
     NSString *placeholderTemplate;
     if (_placeType == PlaceTypeDeparture) {
-        placeholderTemplate = @"departure";
+        placeholderTemplate = NSLocalizedString(@"place_dep", "");
     } else {
-        placeholderTemplate = @"destination";
+        placeholderTemplate = NSLocalizedString(@"place_des", "");
     }
     
     if (_segmentedControl.selectedSegmentIndex == 0) {
-        _searchController.searchBar.placeholder = [NSString stringWithFormat:@"Search %@ city...", placeholderTemplate];
+        _searchController.searchBar.placeholder = [NSString stringWithFormat:NSLocalizedString(@"place_city_placeholder", ""), placeholderTemplate];
     }
     else if (_segmentedControl.selectedSegmentIndex == 1) {
-        _searchController.searchBar.placeholder = [NSString stringWithFormat:@"Search %@ airport...", placeholderTemplate];
+        _searchController.searchBar.placeholder = [NSString stringWithFormat:NSLocalizedString(@"place_aitport_placeholder", ""), placeholderTemplate];
     }
 }
 

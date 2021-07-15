@@ -31,7 +31,7 @@
     {
         isFavorites = NO;
         _tickets = tickets;
-        self.title = @"Tickets";
+        self.title = NSLocalizedString(@"tickets_title", "");
         
         _datePicker = [[UIDatePicker alloc] init];
         _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
@@ -65,7 +65,7 @@
         isFavorites = YES;
         _favoriteSortType = FavoriteSortTypeAscPrice;
         _tickets = [NSArray new];
-        self.title = @"Favorites";
+        self.title = NSLocalizedString(@"favorites_tab", "");
     }
     return self;
 }
@@ -112,27 +112,28 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (isFavorites) return;
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Action with ticket" message:@"What should be done with the selected ticket?" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"actions_with_tickets", "") message:NSLocalizedString(@"actions_with_tickets_describe", "") preferredStyle:UIAlertControllerStyleActionSheet];
+    
     UIAlertAction *favoriteAction;
+    
     if ([[CoreDataHelper sharedInstance] isFavorite:[_tickets objectAtIndex:indexPath.row]]) {
-        favoriteAction = [UIAlertAction actionWithTitle:@"Remove from favorites" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        favoriteAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"remove_from_favorite", "") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
             [[CoreDataHelper sharedInstance] removeFromFavorite:[self->_tickets objectAtIndex:indexPath.row]];
             [self.tableView reloadRowsAtIndexPaths: [NSArray arrayWithObject:indexPath] withRowAnimation:NO];
         }];
     } else {
-        favoriteAction = [UIAlertAction actionWithTitle:@"Add to favourites" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        favoriteAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"add_to_favorite", "") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [[CoreDataHelper sharedInstance] addToFavorite:[self->_tickets objectAtIndex:indexPath.row] from:FavoriteSourceSearch];
             [self.tableView  reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:NO];
         }];
     }
     
-    UIAlertAction *notificationAction = [UIAlertAction actionWithTitle:@"Set reminder" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *notificationAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"remind_me", "") style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
         self->notificationCell = [tableView cellForRowAtIndexPath:indexPath];
         [self->_dateTextField becomeFirstResponder];
     }];
-
     
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"close", "") style:UIAlertActionStyleCancel handler:nil];
     [alertController addAction:favoriteAction];
     [alertController addAction:notificationAction];
     [alertController addAction:cancelAction];
@@ -153,7 +154,7 @@
     
     //для избранного
     if (isFavorites) {
-        _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Search", @"Price Map"]];
+        _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[NSLocalizedString(@"search_tab", ""), NSLocalizedString(@"map_tab", "")]];
         [_segmentedControl addTarget:self action:@selector(changeSource) forControlEvents:UIControlEventValueChanged];
         _segmentedControl.tintColor = [UIColor blackColor];
         self.navigationItem.titleView = _segmentedControl;
@@ -217,8 +218,8 @@
     };
     
     return [UIMenu menuWithChildren:@[
-        [UIAction actionWithTitle:@"Price" image:priceImage identifier:SORT_BY_PRICE handler:menuHandler],
-        [UIAction actionWithTitle:@"Date" image:dateImage identifier:SORT_BY_DATE handler:menuHandler ],
+        [UIAction actionWithTitle:NSLocalizedString(@"price", "") image:priceImage identifier:SORT_BY_PRICE handler:menuHandler],
+        [UIAction actionWithTitle:NSLocalizedString(@"date", "") image:dateImage identifier:SORT_BY_DATE handler:menuHandler ],
     ]];
 }
 
@@ -238,7 +239,7 @@
 
 - (void)doneButtonDidTap:(UIBarButtonItem *)sender {
     if (_datePicker.date && notificationCell) {
-        NSString *message = [NSString stringWithFormat:@"%@ - %@ за %@ руб.", notificationCell.ticket.from, notificationCell.ticket.to, notificationCell.ticket.price];
+        NSString *message = [NSString stringWithFormat:NSLocalizedString(@"not_summary", ""), notificationCell.ticket.from, notificationCell.ticket.to, notificationCell.ticket.price];
 
         NSURL *imageURL;
         if (notificationCell.airlineLogoView.image) {
@@ -252,7 +253,7 @@
             imageURL = [NSURL fileURLWithPath:path];
         }
         
-        Notification notification = NotificationMake(@"Ticket reminder", message, _datePicker.date, imageURL);
+        Notification notification = NotificationMake(NSLocalizedString(@"ticket_reminder", ""), message, _datePicker.date, imageURL);
         [[NotificationCenter sharedInstance] sendNotification:notification];
 
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
@@ -260,8 +261,8 @@
         [dateFormat setLocale: [NSLocale localeWithLocaleIdentifier:@"EN_en"]];
         NSString *stringDate = [dateFormat stringFromDate:_datePicker.date];
         
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Successfully" message:[NSString stringWithFormat:@"Notification will be sent - %@", stringDate] preferredStyle:(UIAlertControllerStyleAlert)];
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"success", "") message:[NSString stringWithFormat:NSLocalizedString(@"notification_will_be_sent", ""), stringDate] preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"close", "") style:UIAlertActionStyleCancel handler:nil];
         [alertController addAction:cancelAction];
         
         _datePicker.date = [NSDate date];
